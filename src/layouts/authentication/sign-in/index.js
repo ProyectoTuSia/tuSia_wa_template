@@ -1,10 +1,11 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable-next-line no-restricted-globals */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 // @mui material components
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
+import Swal from "sweetalert2";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -42,24 +43,38 @@ function Basic() {
   const handleLogin = (email, password) => {
     event.preventDefault();
     getToken({ variables: { email, password } });
+    console.log(dataResponse);
+    if (dataResponse.data) {
+      setToken(dataResponse.data.authLogin);
+      console.log(token);
+      window.location.href = "/dashboard";
+    } else {
+      console.log(dataResponse.error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    }
   };
 
+  /* 
   useEffect(() => {
     if (dataResponse.data) {
       setToken(dataResponse.data.authLogin);
     }
-  }, [dataResponse]);
-
-  if (token) {
-    console.log(token);
-  }
+  }, [dataResponse]); */
 
   return (
     <BasicLayout image={bgImage}>
+      {/* <Alert severity="error">
+        <AlertTitle>Error</AlertTitle>
+        This is an error alert — <strong>check it out!</strong>
+      </Alert> */}
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          bgColor="primary"
           borderRadius="lg"
           coloredShadow="info"
           mx={2}
@@ -109,7 +124,7 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth type="submit">
+              <MDButton variant="gradient" color="dark" fullWidth type="submit">
                 iniciar sesión
               </MDButton>
             </MDBox>
