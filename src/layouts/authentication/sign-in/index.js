@@ -1,5 +1,6 @@
-/* eslint-disable react/jsx-no-bind */
-import { useState } from "react";
+/* eslint-disable no-restricted-globals */
+/* eslint-disable-next-line no-restricted-globals */
+import { useState, useEffect } from "react";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -15,39 +16,43 @@ import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Graphql connection
-// import { useMutation, gql } from "@apollo/client";
+import { useLazyQuery, gql } from "@apollo/client";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+
+const DATA_QUERY_LOGIN = gql`
+  query ($email: String!, $password: String!) {
+    authLogin(email: $email, password: $password)
+  }
+`;
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
-  /*
   const [mailInputData, setMail] = useState("");
   const [passwordInputData, setPassword] = useState("");
 
-  
-  
-  const DATA_QUERY_LOGIN = gql`
-    mutation ($email: String!, $password: String!) {
-      authLogin(email: $email, password: $password)
-    }
-  `;
-  
-  function login() {
-    const email = mailInputData;
-    const password = passwordInputData;
+  const [token, setToken] = useState("");
 
-    const { data, loading, error } = useMutation(DATA_QUERY_LOGIN, {
-      variables: {
-        email,
-        password,
-      },
-    });
-  } */
+  const [getToken, dataResponse] = useLazyQuery(DATA_QUERY_LOGIN);
+
+  const handleLogin = (email, password) => {
+    event.preventDefault();
+    getToken({ variables: { email, password } });
+  };
+
+  useEffect(() => {
+    if (dataResponse.data) {
+      setToken(dataResponse.data.authLogin);
+    }
+  }, [dataResponse]);
+
+  if (token) {
+    console.log(token);
+  }
 
   return (
     <BasicLayout image={bgImage}>
@@ -68,13 +73,19 @@ function Basic() {
           </MDTypography>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
+          <MDBox
+            component="form"
+            role="form"
+            onSubmit={() => {
+              handleLogin(mailInputData, passwordInputData);
+            }}
+          >
             <MDBox mb={2}>
               <MDInput
                 type="email"
                 label="Correo"
                 fullWidth
-                // onChange={(event) => setMail(event.target.value)}
+                onChange={(event) => setMail(event.target.value)}
               />
             </MDBox>
             <MDBox mb={2}>
@@ -82,7 +93,7 @@ function Basic() {
                 type="password"
                 label="Contraseña"
                 fullWidth
-                // onChange={(event) => setPassword(event.target.value)}
+                onChange={(event) => setPassword(event.target.value)}
               />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
@@ -98,7 +109,7 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth /* onClick={login */>
+              <MDButton variant="gradient" color="info" fullWidth type="submit">
                 iniciar sesión
               </MDButton>
             </MDBox>
