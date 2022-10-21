@@ -1,10 +1,13 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable-next-line no-restricted-globals */
-import { useState } from "react";
+/* eslint-disable no-unused-vars */
+/* eslint-disable consistent-return */
+
+// Import Hooks
+import { useState, useEffect } from "react";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import Switch from "@mui/material/Switch";
+
+// Sweet Aleret
 import Swal from "sweetalert2";
 
 // Material Dashboard 2 React components
@@ -17,60 +20,73 @@ import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Graphql connection
-import { useLazyQuery, gql } from "@apollo/client";
+import { useQuery } from "urql";
 
-// Images
+// Background Image
 import bgImage from "assets/images/tuSIA.jpg";
 
-const DATA_QUERY_LOGIN = gql`
+const DATA_QUERY_LOGIN = `
   query ($email: String!, $password: String!) {
     authLogin(email: $email, password: $password)
   }
 `;
 
+function handleLogin(responseData) {
+  console.log(responseData);
+  if (responseData.authLogin !== "User not found" && responseData.authLogin !== "Wrong password") {
+    localStorage.setItem("token", responseData.authLogin);
+    window.location.href = "/dashboard";
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Usuario o Contraseña incorrectos",
+    });
+  }
+}
+
+function checkLogin() {
+  if (localStorage.getItem("token")) {
+    window.location.href = "/dashboard";
+  }
+}
+
 function Basic() {
-  const [rememberMe, setRememberMe] = useState(false);
+  checkLogin();
 
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  // Hooks declaration (email and password inputs)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [mailInputData, setMail] = useState("");
-  const [passwordInputData, setPassword] = useState("");
+  // Query GraphQL to login
+  const [result, reexecuteQuery] = useQuery({
+    query: DATA_QUERY_LOGIN,
+    variables: {
+      email: `${email}@unal.edu.co`,
+      password,
+    },
+    pause: true,
+  });
 
-  const [token, setToken] = useState("");
+  // Data, fetching and error of the query
+  const { data, fetching, error } = result;
 
-  const [getToken, dataResponse] = useLazyQuery(DATA_QUERY_LOGIN);
+  if (error) console.log(error.message);
 
-  const handleLogin = (email, password) => {
-    event.preventDefault();
-    getToken({ variables: { email, password } });
-    console.log(dataResponse);
-    if (dataResponse.data) {
-      setToken(dataResponse.data.authLogin);
-      console.log(token);
-      window.location.href = "/dashboard";
-    } else {
-      console.log(dataResponse.error);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-      });
-    }
-  };
-
-  /* 
+  // Function to execute the query
   useEffect(() => {
-    if (dataResponse.data) {
-      setToken(dataResponse.data.authLogin);
-    }
-  }, [dataResponse]); */
+    if (result.fetching) return;
+
+    // Set up to refetch in one second, if the query is idle
+    const timerId = setTimeout(() => {
+      reexecuteQuery({ requestPolicy: "network-only" });
+    }, 1000);
+
+    return () => clearTimeout(timerId);
+  }, [result.fetching, reexecuteQuery, email, password]);
 
   return (
     <BasicLayout image={bgImage}>
-      {/* <Alert severity="error">
-        <AlertTitle>Error</AlertTitle>
-        This is an error alert — <strong>check it out!</strong>
-      </Alert> */}
       <Card>
         <MDBox
           variant="gradient"
@@ -91,37 +107,31 @@ function Basic() {
           <MDBox
             component="form"
             role="form"
-            onSubmit={() => {
-              handleLogin(mailInputData, passwordInputData);
+            onSubmit={(event) => {
+              event.preventDefault();
+              reexecuteQuery();
+              handleLogin(data);
             }}
           >
             <MDBox mb={2}>
               <MDInput
-                type="email"
+                type="text"
                 label="Correo"
+                id="emailInput"
+                value={email}
                 fullWidth
-                onChange={(event) => setMail(event.target.value)}
+                onChange={(event) => setEmail(event.target.value)}
               />
             </MDBox>
             <MDBox mb={2}>
               <MDInput
                 type="password"
                 label="Contraseña"
+                id="emailPassword"
+                value={password}
                 fullWidth
                 onChange={(event) => setPassword(event.target.value)}
               />
-            </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                onClick={handleSetRememberMe}
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;Recuérdame
-              </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="dark" fullWidth type="submit">

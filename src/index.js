@@ -1,25 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { createClient, Provider } from "urql";
 
 import App from "App";
 
 // Material Dashboard 2 React Context Provider
 import { MaterialUIControllerProvider } from "context";
 
-const client = new ApolloClient({
-  uri: "http://localhost:3001/graphql",
-  cache: new InMemoryCache(),
+const client = createClient({
+  url: "http://localhost:3001/graphql",
 });
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
+  <Provider value={client}>
     <BrowserRouter>
       <MaterialUIControllerProvider>
         <App />
       </MaterialUIControllerProvider>
     </BrowserRouter>
-  </ApolloProvider>,
+  </Provider>,
   document.getElementById("root")
 );
