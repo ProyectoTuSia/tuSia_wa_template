@@ -14,18 +14,55 @@ import Footer from "examples/Footer";
 import Calendar from "@toast-ui/react-calendar";
 import "@toast-ui/calendar/dist/toastui-calendar.min.css";
 
+const DEFAULT_MONTH_OPTIONS = {
+  dayNames: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"],
+  visibleWeeksCount: 0,
+  workweek: false,
+  narrowWeekend: false,
+  startDayOfWeek: 0,
+  isAlways6Weeks: false,
+  visibleEventCount: 6,
+};
+
+const DEFAULT_THEME_OPTIONS = {
+  month: {
+    dayName: {
+      backgroundColor: "rgba(240, 242, 245, 0.4)",
+    },
+  },
+};
+
+const template = {
+  milestone(event) {
+    return `<span style="color:#fff;background-color: ${event.backgroundColor};">${event.title}</span>`;
+  },
+  milestoneTitle() {
+    return "Milestone";
+  },
+  allday(event) {
+    return `${event.title}<i class="fa fa-refresh"></i>`;
+  },
+  alldayTitle() {
+    return "All Day";
+  },
+};
+
 function Schedule() {
   const calendars = [
     {
-      id: "0",
-      name: "Private",
-      backgroundColor: "#9e5fff",
+      id: "1",
+      name: "My Calendar",
+      color: "#ffffff",
+      bgColor: "#9e5fff",
+      dragBgColor: "#9e5fff",
       borderColor: "#9e5fff",
     },
     {
-      id: "1",
+      id: "2",
       name: "Company",
-      backgroundColor: "#00a9ff",
+      color: "#ffffff",
+      bgColor: "#00a9ff",
+      dragBgColor: "#00a9ff",
       borderColor: "#00a9ff",
     },
   ];
@@ -35,7 +72,6 @@ function Schedule() {
       id: "1",
       calendarId: "cal1",
       title: "Lunch",
-      category: "time",
       start: "2022-10-21T07:00:00",
       end: "2022-10-21T09:00:00",
     },
@@ -48,16 +84,6 @@ function Schedule() {
       end: "2022-10-28T15:30:00",
     },
   ];
-
-  const DEFAULT_MONTH_OPTIONS = {
-    dayNames: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"],
-    visibleWeeksCount: 0,
-    workweek: false,
-    narrowWeekend: false,
-    startDayOfWeek: 0,
-    isAlways6Weeks: false,
-    visibleEventCount: 6,
-  };
 
   return (
     <DashboardLayout>
@@ -73,6 +99,8 @@ function Schedule() {
               isReadOnly="true"
               useDetailPopup="true"
               month={DEFAULT_MONTH_OPTIONS}
+              theme={DEFAULT_THEME_OPTIONS}
+              eventFilter={(event) => event.isVisible && event.isAllday}
               calendars={calendars}
               events={initialEvents}
             />
