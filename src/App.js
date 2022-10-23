@@ -95,13 +95,22 @@ export default function App() {
   }, [pathname]);
 
   const getRoutes = (allRoutes) =>
-    allRoutes.map((route) => {
-      if (route.collapse) {
-        return getRoutes(route.collapse);
+    allRoutes.map(({ roles = [], collapse, route, component, key }) => {
+      //acceder al servivio o al locarStorage para obtener el role del usuario uwu
+
+      if (collapse) {
+        return getRoutes(collapse);
       }
 
-      if (route.route) {
-        return <Route exact path={route.route} element={route.component} key={route.key} />;
+      if (route) {
+        return (
+          <Route
+            exact
+            path={route}
+            element={roles.includes("teacher") ? component : <Navigate to={"/unauthoraized"} />}
+            key={key}
+          />
+        );
       }
 
       return null;
@@ -151,7 +160,14 @@ export default function App() {
         )}
         {layout === "vr" && <Configurator />}
         <Routes>
+          <Route
+            exact
+            path={"/unauthoraized"}
+            element={<h1>unauthoraized</h1>}
+            key={"unauthoraized"}
+          />
           {getRoutes(routes)}
+          ;
           <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
         </Routes>
       </ThemeProvider>

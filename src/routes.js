@@ -30,12 +30,15 @@ import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Schedule from "layouts/schedule/index";
+import Grades from "layouts/grades/index";
+
 
 // @mui icons
 import Icon from "@mui/material/Icon";
 
 const routes = [
   {
+    roles: ["student", "teacher"], 
     type: "collapse",
     name: "Dashboard",
     key: "dashboard",
@@ -68,12 +71,13 @@ const routes = [
     component: <RTL />,
   },
   {
+    roles: ["teacher"],
     type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
+    name: "Grades",
+    key: "grades",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/grades",
+    component: <Grades />,
   },
   {
     type: "collapse",
@@ -100,6 +104,7 @@ const routes = [
     component: <SignUp />,
   },
   {
+    roles: ["student"],
     type: "collapse",
     name: "My Schedule",
     key: "my-schedule",
