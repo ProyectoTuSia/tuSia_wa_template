@@ -2,14 +2,14 @@
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 // import Button from "@mui/material/Button";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
+/* import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem"; */
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Checkbox, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
-import Collapse from "@mui/material/Collapse";
-import ExpandLess from "@mui/icons-material/ExpandLess";
+import { /* Checkbox, */ Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+/* import Collapse from "@mui/material/Collapse";
+import ExpandLess from "@mui/icons-material/ExpandLess"; */
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 // Material Dashboard 2 React components
@@ -37,9 +37,9 @@ function Tables() {
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
-  const [checked, setChecked] = React.useState([0]);
-  const [open, setOpen] = React.useState(false);
-  const handleClick = () => {
+  /* const [checked, setChecked] = React.useState([0]);
+  const [open, setOpen] = React.useState(false); */
+  /* const handleClick = () => {
     setOpen(!open);
   };
   const handleToggle = (value) => () => {
@@ -53,7 +53,7 @@ function Tables() {
     }
 
     setChecked(newChecked);
-  };
+  }; */
   const settables1 = () => {
     if (show1 === true) {
       setShow2(false);
