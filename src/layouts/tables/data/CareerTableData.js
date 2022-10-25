@@ -19,7 +19,7 @@ query Ins_getCareersOfStudent($username: String!) {
 
 export default function data() {
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [username, setUsername] = useState(jwtDecode(token.email.split("@")[0]));
+  const [username, setUsername] = useState(jwtDecode(token).email.split("@")[0]);
 
   const [result, reexecuteQuery] = useQuery({
     query: DATA_QUERY_CAREER,
