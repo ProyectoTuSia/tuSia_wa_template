@@ -31,14 +31,15 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Schedule from "layouts/schedule/index";
 import Grades from "layouts/grades/index";
-
+import EditWeight from "layouts/grades/editWeight";
+import UploadGrades from "layouts/grades/uploadGrades";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
 
 const routes = [
   {
-    roles: ["student", "teacher"], 
+    roles: ["student", "teacher"],
     type: "collapse",
     name: "Dashboard",
     key: "dashboard",
@@ -88,6 +89,7 @@ const routes = [
     component: <Profile />,
   },
   {
+    roles: ["teacher", "student", null],
     type: "collapse",
     name: "Sign In",
     key: "sign-in",
@@ -111,6 +113,24 @@ const routes = [
     icon: <Icon fontSize="small">calendar_month</Icon>,
     route: "/my-schedule",
     component: <Schedule />,
+  },
+  {
+    roles: ["teacher"],
+    type: "",
+    name: "editWeight",
+    key: "edit-weight",
+    icon: <Icon fontSize="small">calendar_month</Icon>,
+    route: "/editWeight",
+    component: <EditWeight />,
+  },
+  {
+    roles: ["teacher"],
+    type: "",
+    name: "uploadGrades",
+    key: "upload-grades",
+    icon: <Icon fontSize="small">calendar_month</Icon>,
+    route: "/uploadGrades",
+    component: <UploadGrades />,
   },
 ];
 

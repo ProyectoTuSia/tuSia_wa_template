@@ -72,7 +72,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     ({ type, name, icon, title, noCollapse, key, href, route, roles = [] }) => {
       let returnValue = null;
 
-      if (roles.includes("student")) {
+      if (roles.includes(localStorage.getItem("role"))) {
         if (type === "collapse") {
           returnValue = href ? (
             <Link
