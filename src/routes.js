@@ -29,12 +29,20 @@ import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
-import Schedule from "layouts/schedule/index2";
+import Schedule from "layouts/schedule/index";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
 
 const routes = [
+  {
+    type: "collapse",
+    name: "Mi Horario",
+    key: "mi-horario",
+    icon: <Icon fontSize="small">calendar_month</Icon>,
+    route: "/mi-horario",
+    component: <Schedule />,
+  },
   {
     type: "collapse",
     name: "Dashboard",
@@ -98,14 +106,6 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
-  },
-  {
-    type: "collapse",
-    name: "My Schedule",
-    key: "my-schedule",
-    icon: <Icon fontSize="small">calendar_month</Icon>,
-    route: "/my-schedule",
-    component: <Schedule />,
   },
 ];
 

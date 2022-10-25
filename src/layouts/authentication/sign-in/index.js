@@ -22,6 +22,10 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Graphql connection
 import { useQuery } from "urql";
 
+// JWT Decode
+// eslint-disable-next-line camelcase
+import jwt_decode from "jwt-decode";
+
 // Background Image
 import bgImage from "assets/images/tuSIA.jpg";
 
@@ -46,12 +50,19 @@ function handleLogin(responseData) {
 }
 
 function checkLogin() {
-  if (localStorage.getItem("token")) {
-    window.location.href = "/dashboard";
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    if (Date.now() < jwt_decode(token).exp * 1000) {
+      window.location.href = "/dashboard";
+    } else {
+      localStorage.removeItem("token");
+    }
   }
 }
 
 function Basic() {
+  // Check if token is still valid (if it exists)
   checkLogin();
 
   // Hooks declaration (email and password inputs)
