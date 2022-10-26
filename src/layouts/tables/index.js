@@ -29,11 +29,13 @@ import DataTable from "examples/Tables/DataTable";
 import TypologysTabledata from "layouts/tables/data/TypologysTabledata";
 import CareerTableData from "layouts/tables/data/CareerTableData";
 
-
 function Tables() {
   // const { columns: pColumns, rows: pRows } = projectsTableData();
+  const { columns: cColumns, rows: cRows, career , careerCheckList} = CareerTableData();
+
+  console.log(careerCheckList)
+  
   const { columns: tColumns, rows: tRows } = TypologysTabledata();
-  const { columns: cColumns, rows: cRows } = CareerTableData();
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);

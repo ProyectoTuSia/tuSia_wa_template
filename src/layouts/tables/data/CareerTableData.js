@@ -21,6 +21,23 @@ export default function CareerData() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [username, setUsername] = useState(jwtDecode(token).email.split("@")[0]);
 
+  //Hook para saber los id de los checkbox seleccionados
+
+  const [idCheckeados, setidCheckeados] = useState([]);
+
+  //Metodo para modificar la lista de los id checkeados
+  const modificarCheckeados = (event) => {
+    //Si ya estaba en la lista de checkeados, quitarlo
+    if (idCheckeados.includes(event.target.id)) {
+      idCheckeados.splice(idCheckeados.indexOf(event.target.id), 1);
+    } else {
+      //Si no estaba, agregarlo a la lista
+      idCheckeados.push(event.target.id);
+    }
+
+    console.log(idCheckeados)
+  };
+
   const [result, reexecuteQuery] = useQuery({
     query: DATA_QUERY_CAREER,
     variables: {
@@ -34,6 +51,7 @@ export default function CareerData() {
     return {
       columns: [],
       rows: [],
+      carrer: false,
     };
   }
 
@@ -41,6 +59,7 @@ export default function CareerData() {
     return {
       columns: [],
       rows: [],
+      carrer: false,
     };
   }
 
@@ -55,7 +74,10 @@ export default function CareerData() {
       {
         Check: (
           <MDBox ml={-1}>
-            <Checkbox id={data.ins_getCareersOfStudent[0].career.code} />
+            <Checkbox
+              id={data.ins_getCareersOfStudent[0].career.code}
+              onChange={modificarCheckeados}
+            />
           </MDBox>
         ),
         Id: (
@@ -70,5 +92,7 @@ export default function CareerData() {
         ),
       },
     ],
+    carrer: data.ins_getCareersOfStudent[0].career.code,
+    careerCheckList: idCheckeados,
   };
 }
