@@ -65,14 +65,14 @@ export default function CareerData() {
 
   return {
     columns: [
-      { Header: "Check:", accessor: "Check", align: "right" },
-      { Header: "Id", accessor: "Id", align: "center" },
+      { Header: "Seleccionar", accessor: "Seleccionar", align: "right" },
+      { Header: "Código", accessor: "Código", align: "center" },
       { Header: "Nombre", accessor: "Nombre", align: "left" },
     ],
 
     rows: [
       {
-        Check: (
+        Seleccionar: (
           <MDBox ml={-1}>
             <Checkbox
               id={data.ins_getCareersOfStudent[0].career.code}
@@ -80,7 +80,7 @@ export default function CareerData() {
             />
           </MDBox>
         ),
-        Id: (
+        Código: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             {data.ins_getCareersOfStudent[0].career.code}
           </MDTypography>

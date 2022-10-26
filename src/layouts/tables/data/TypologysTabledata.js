@@ -12,6 +12,7 @@ query($careerCode: Int!, $username: String!) {
     subject {
       code
       name
+      credits
     }
     typology
   }
@@ -48,64 +49,50 @@ export default function SubjectsData(username, careerCheckList) {
     };
   }
 
-  console.log(data);
+  const foptaSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter( (subject) => subject.typology==='fundamentacion optativa');
+  const fobliSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter( (subject) => subject.typology==='fundamentacion obligatoria');
+  const doptaSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter( (subject) => subject.typology==='disciplinar optativa');
+  const dobliSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter( (subject) => subject.typology==='disciplinar obligatoria');
+  const leSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter( (subject) => subject.typology==='libre eleccion');
+  const nivSubejcts = data.ins_getStudentNotCoursedSubjectsInCareer.filter( (subject) => subject.typology==='nivelacion');
+  const tgSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter( (subject) => subject.typology==='trabajo de grado');
+
+  console.log(foptaSubjects);
+  console.log(fobliSubjects);
+  console.log(doptaSubjects);
+  console.log(dobliSubjects);
+  console.log(leSubjects);
+  console.log(nivSubejcts);
+  console.log(tgSubjects);
 
   return {
     columns: [
-      { Header: "Check", accessor: "Check", align: "right" },
-      { Header: "Id", accessor: "Id", align: "center" },
-      { Header: "Typology", accessor: "Typology", align: "left" },
+      { Header: "Seleccionar", accessor: "Seleccionar", align: "right" },
+      { Header: "Código", accessor: "Código", align: "center" },
+      { Header: "Nombre", accessor: "Nombre", align: "left" },
+      { Header: "Creditos", accessor: "Creditos", align: "left" },
     ],
 
     rows: [
       {
-        Check: (
+        Seleccionar: (
           <MDBox ml={-1}>
             <Checkbox> </Checkbox>
           </MDBox>
         ),
-        Id: (
+        Código: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             1
           </MDTypography>
         ),
-        Typology: (
+        Nombre: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             Empanada
           </MDTypography>
         ),
-      },
-      {
-        Check: (
-          <MDBox ml={-1}>
-            <Checkbox id={1}> </Checkbox>
-          </MDBox>
-        ),
-        Id: (
+        Creditos: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            2
-          </MDTypography>
-        ),
-        Typology: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Arepa
-          </MDTypography>
-        ),
-      },
-      {
-        Check: (
-          <MDBox ml={-1}>
-            <Checkbox> </Checkbox>
-          </MDBox>
-        ),
-        Id: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            3
-          </MDTypography>
-        ),
-        Typology: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Rellena
+            Creditos
           </MDTypography>
         ),
       },
