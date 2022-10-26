@@ -1,5 +1,5 @@
 import MDBox from "components/MDBox";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
@@ -17,7 +17,7 @@ query Ins_getCareersOfStudent($username: String!) {
   }
 }`;
 
-export default function data() {
+export default function CareerData() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [username, setUsername] = useState(jwtDecode(token).email.split("@")[0]);
 
@@ -25,17 +25,25 @@ export default function data() {
     query: DATA_QUERY_CAREER,
     variables: {
       username,
-    }
+    },
   });
 
   const { data, fetching, error } = result;
 
-  if (fetching) return <p>Loading...</p>;
-  if (error) return <p>Oh no... {error.message}</p>;
-  console.log(result);
-  console.log(username);
-  console.log(token);
-// console.log(result.data.ins_getCareersOfStudent[0].career.code)
+  if (fetching) {
+    return {
+      columns: [],
+      rows: [],
+    };
+  }
+
+  if (error) {
+    return {
+      columns: [],
+      rows: [],
+    };
+  }
+
   return {
     columns: [
       { Header: "Check:", accessor: "Check", align: "right" },
@@ -47,51 +55,17 @@ export default function data() {
       {
         Check: (
           <MDBox ml={-1}>
-            <Checkbox></Checkbox>
+            <Checkbox id={data.ins_getCareersOfStudent[0].career.code} />
           </MDBox>
         ),
         Id: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            1231231
+            {data.ins_getCareersOfStudent[0].career.code}
           </MDTypography>
         ),
         Nombre: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Ingenieria de Sistemas
-          </MDTypography>
-        ),
-      },
-      {
-        Check: (
-          <MDBox ml={-1}>
-            <Checkbox></Checkbox>
-          </MDBox>
-        ),
-        Id: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            17174
-          </MDTypography>
-        ),
-        Nombre: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Ingenieria Agricola
-          </MDTypography>
-        ),
-      },
-      {
-        Check: (
-          <MDBox ml={-1}>
-            <Checkbox></Checkbox>
-          </MDBox>
-        ),
-        Id: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            12345
-          </MDTypography>
-        ),
-        Nombre: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Medicina
+            {data.ins_getCareersOfStudent[0].career.name}
           </MDTypography>
         ),
       },
