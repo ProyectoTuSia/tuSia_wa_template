@@ -34,8 +34,6 @@ export default function CareerData() {
       //Si no estaba, agregarlo a la lista
       idCheckeados.push(event.target.id);
     }
-
-    console.log(idCheckeados)
   };
 
   const [result, reexecuteQuery] = useQuery({
@@ -51,7 +49,7 @@ export default function CareerData() {
     return {
       columns: [],
       rows: [],
-      carrer: false,
+      username,
       careerCheckList: idCheckeados,
     };
   }
@@ -60,7 +58,7 @@ export default function CareerData() {
     return {
       columns: [],
       rows: [],
-      carrer: false,
+      username,
       careerCheckList: idCheckeados,
     };
   }
@@ -94,7 +92,7 @@ export default function CareerData() {
         ),
       },
     ],
-    carrer: data.ins_getCareersOfStudent[0].career.code,
+    username,
     careerCheckList: idCheckeados,
   };
 }

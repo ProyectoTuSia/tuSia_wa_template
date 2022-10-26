@@ -31,10 +31,16 @@ import CareerTableData from "layouts/tables/data/CareerTableData";
 
 function Tables() {
   // const { columns: pColumns, rows: pRows } = projectsTableData();
-  const { columns: cColumns, rows: cRows, career, careerCheckList } = CareerTableData();
+  const { columns: cColumns, rows: cRows, username, careerCheckList } = CareerTableData();
 
-  const { columns: tColumns, rows: tRows } = TypologysTabledata();
-  const [show, setShow] = useState(false);
+  const { columns: tColumns, rows: tRows } = TypologysTabledata(username, careerCheckList);
+
+  //Mostrar la tabla de las carreras por defecto
+  const [showCareers, setShowCareers] = useState(true);
+
+  //La tabla de asignaturas tenerla oculta al inicio
+  const [showSubjects, setShowSubjects] = useState(false);
+
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
   /* const [checked, setChecked] = React.useState([0]);
@@ -54,6 +60,18 @@ function Tables() {
 
     setChecked(newChecked);
   }; */
+
+  /** Si ya se estaba mostrando la tabla carreras
+   * Al pedir que se muestren las materias dejar de mostrarla
+   * Mostrar las asignaturas
+   * */
+  const mostrarMaterias = () => {
+    if (showCareers === true) {
+      setShowCareers(false);
+      setShowSubjects(true);
+    }
+  };
+
   const settables1 = () => {
     if (show1 === true) {
       setShow2(false);
@@ -62,17 +80,19 @@ function Tables() {
   };
 
   const settables2 = () => {
-    if (show === true) {
+    if (showSubjects === true) {
       setShow1(false);
       setShow2(false);
     }
-    setShow((prev1) => !prev1);
+    setShowSubjects((prev1) => !prev1);
   };
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
+
+          {showCareers && (
           <Grid item xs={9}>
             <Card>
               <MDBox
@@ -100,12 +120,17 @@ function Tables() {
               </MDBox>
             </Card>
           </Grid>
+          )}
+
+          {showCareers && (
           <Grid item xs={3}>
             <Card>
-              <MDButton onClick={() => settables2()}> Mostrar Materias </MDButton>
+              <MDButton onClick={() => mostrarMaterias()}> Mostrar Materias </MDButton>
             </Card>
           </Grid>
-          {show && (
+          )}
+
+          {showSubjects && (
             <Grid item xs={9}>
               <Card>
                 <MDBox
@@ -165,7 +190,7 @@ function Tables() {
               </Card>
             </Grid>
           )}
-          {show && (
+          {showSubjects && (
             <Grid item xs={3}>
               <Card>
                 <MDButton onClick={() => settables1()}> Mostrar Grupos </MDButton>
@@ -240,7 +265,7 @@ function Tables() {
           {show2 && (
             <Grid item xs={3}>
               <Card>
-                <MDButton> Finalizar Inscripción </MDButton>
+                <MDButton> Finalizar Inscripsión </MDButton>
               </Card>
             </Grid>
           )}
