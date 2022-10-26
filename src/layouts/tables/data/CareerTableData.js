@@ -52,6 +52,7 @@ export default function CareerData() {
       columns: [],
       rows: [],
       carrer: false,
+      careerCheckList: idCheckeados,
     };
   }
 
@@ -60,6 +61,7 @@ export default function CareerData() {
       columns: [],
       rows: [],
       carrer: false,
+      careerCheckList: idCheckeados,
     };
   }
 

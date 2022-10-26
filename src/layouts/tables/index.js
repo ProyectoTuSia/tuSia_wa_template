@@ -33,8 +33,6 @@ function Tables() {
   // const { columns: pColumns, rows: pRows } = projectsTableData();
   const { columns: cColumns, rows: cRows, career , careerCheckList} = CareerTableData();
 
-  console.log(careerCheckList)
-  
   const { columns: tColumns, rows: tRows } = TypologysTabledata();
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
