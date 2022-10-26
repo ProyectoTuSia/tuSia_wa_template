@@ -1,5 +1,5 @@
 import MDBox from "components/MDBox";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
@@ -25,12 +25,17 @@ export default function data() {
     query: DATA_QUERY_CAREER,
     variables: {
       username,
-    },
-    pause: true,
+    }
   });
 
+  const { data, fetching, error } = result;
+
+  if (fetching) return <p>Loading...</p>;
+  if (error) return <p>Oh no... {error.message}</p>;
   console.log(result);
-  
+  console.log(username);
+  console.log(token);
+// console.log(result.data.ins_getCareersOfStudent[0].career.code)
   return {
     columns: [
       { Header: "Check:", accessor: "Check", align: "right" },
@@ -47,7 +52,7 @@ export default function data() {
         ),
         Id: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            454554
+            1231231
           </MDTypography>
         ),
         Nombre: (
