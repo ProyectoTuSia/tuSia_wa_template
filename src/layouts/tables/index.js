@@ -31,7 +31,7 @@ import CareerTableData from "layouts/tables/data/CareerTableData";
 
 function Tables() {
   // const { columns: pColumns, rows: pRows } = projectsTableData();
-  const { columns: cColumns, rows: cRows, career , careerCheckList} = CareerTableData();
+  const { columns: cColumns, rows: cRows, career, careerCheckList } = CareerTableData();
 
   const { columns: tColumns, rows: tRows } = TypologysTabledata();
   const [show, setShow] = useState(false);
@@ -240,7 +240,7 @@ function Tables() {
           {show2 && (
             <Grid item xs={3}>
               <Card>
-                <MDButton> Finalizar Inscripsión </MDButton>
+                <MDButton> Finalizar Inscripción </MDButton>
               </Card>
             </Grid>
           )}
