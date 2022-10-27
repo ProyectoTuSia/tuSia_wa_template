@@ -71,24 +71,6 @@ function Tables() {
   // Almacenar los codigos de los horarios de los grupos seleccionados
   const [selectedSchedules, setSelectedSchedules] = useState([]);
 
-  /* const [checked, setChecked] = React.useState([0]);
-  const [open, setOpen] = React.useState(false); */
-  /* const handleClick = () => {
-    setOpen(!open);
-  };
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  }; */
-
   /** Si ya se estaba mostrando la tabla carreras
    * Al pedir que se muestren las materias dejar de mostrarla
    * Mostrar las asignaturas
@@ -140,25 +122,6 @@ function Tables() {
       setShowGroups(true);
     }
   };
-
-  // Obtener grupos de asignaturas seleccionadas
-
-  /*
-  const settables1 = () => {
-    if (showGroups === true) {
-      setShow2(false);
-    }
-    setShowGroups((prev1) => !prev1);
-  };
-
-  const settables2 = () => {
-    if (showSubjects === true) {
-      setShowGroups(false);
-      setShow2(false);
-    }
-    setShowSubjects((prev1) => !prev1);
-  };
-  */
 
   return (
     <DashboardLayout>
