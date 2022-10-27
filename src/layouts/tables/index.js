@@ -31,7 +31,7 @@ import CareerTableData from "layouts/tables/data/CareerTableData";
 
 function Tables() {
   // const { columns: pColumns, rows: pRows } = projectsTableData();
-  const { columns: cColumns, rows: cRows, username, careerCheckList } = CareerTableData();
+  const { columns: cColumns, rows: cRows, username, careerCheckList, emptyIdCheckeados } = CareerTableData();
 
   const {
     columns: tColumns,
@@ -73,10 +73,18 @@ function Tables() {
    * Al pedir que se muestren las materias dejar de mostrarla
    * Mostrar las asignaturas
    * */
-  const mostrarMaterias = () => {
+  const goToSubjects = () => {
     if (showCareers === true) {
       setShowCareers(false);
       setShowSubjects(true);
+    }
+  };
+
+  const returnToCareer = () => {
+    if (showSubjects === true) {
+      setShowSubjects(false);
+      emptyIdCheckeados();
+      setShowCareers(true);
     }
   };
 
@@ -94,6 +102,7 @@ function Tables() {
     }
     setShowSubjects((prev1) => !prev1);
   };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -132,7 +141,7 @@ function Tables() {
           {showCareers && (
             <Grid item xs={3}>
               <Card>
-                <MDButton onClick={() => mostrarMaterias()}> Mostrar Materias </MDButton>
+                <MDButton onClick={() => goToSubjects()}> Mostrar Materias </MDButton>
               </Card>
             </Grid>
           )}
@@ -275,9 +284,16 @@ function Tables() {
           )}
           {showSubjects && (
             <Grid item xs={3}>
-              <Card>
-                <MDButton onClick={() => settables1()}> Mostrar Grupos </MDButton>
-              </Card>
+              <MDBox>
+                <Card>
+                  <MDButton onClick={() => returnToCareer()}> Regresar </MDButton>
+                </Card>
+              </MDBox>
+              <MDBox pt={3}>
+                <Card>
+                  <MDButton onClick={() => settables1()}> Mostrar Grupos </MDButton>
+                </Card>
+              </MDBox>
             </Grid>
           )}
           {show1 && (

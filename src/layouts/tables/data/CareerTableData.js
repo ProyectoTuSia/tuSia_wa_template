@@ -22,18 +22,24 @@ export default function CareerData() {
   const [username, setUsername] = useState(jwtDecode(token).email.split("@")[0]);
 
   //Hook para saber los id de los checkbox seleccionados
-
-  const [idCheckeados, setidCheckeados] = useState([]);
+  const [idCheckeados, setIdCheckeados] = useState([]);
 
   //Metodo para modificar la lista de los id checkeados
   const modificarCheckeados = (event) => {
     //Si ya estaba en la lista de checkeados, quitarlo
-    if (idCheckeados.includes(event.target.id)) {
+    if (!event.target.checked) {
       idCheckeados.splice(idCheckeados.indexOf(event.target.id), 1);
     } else {
       //Si no estaba, agregarlo a la lista
       idCheckeados.push(event.target.id);
     }
+  };
+
+  /**
+   * Metodo para vaciar el hook al devolverse
+   */
+  const emptyIdCheckeados = () => {
+    setIdCheckeados([]);
   };
 
   const [result, reexecuteQuery] = useQuery({
@@ -51,6 +57,7 @@ export default function CareerData() {
       rows: [],
       username,
       careerCheckList: idCheckeados,
+      emptyIdCheckeados,
     };
   }
 
@@ -60,6 +67,7 @@ export default function CareerData() {
       rows: [],
       username,
       careerCheckList: idCheckeados,
+      emptyIdCheckeados,
     };
   }
 
@@ -94,5 +102,6 @@ export default function CareerData() {
     ],
     username,
     careerCheckList: idCheckeados,
+    emptyIdCheckeados,
   };
 }
