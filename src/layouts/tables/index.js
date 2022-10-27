@@ -28,6 +28,7 @@ import DataTable from "examples/Tables/DataTable";
 // import projectsTableData from "layouts/tables/data/projectsTableData";
 import TypologysTabledata from "layouts/tables/data/TypologysTabledata";
 import CareerTableData from "layouts/tables/data/CareerTableData";
+import GroupsTableData from "layouts/tables/data/GroupsTableData";
 
 function Tables() {
   // const { columns: pColumns, rows: pRows } = projectsTableData();
@@ -50,6 +51,8 @@ function Tables() {
     nivRows,
   } = TypologysTabledata(username, careerCheckList);
 
+  const {columns:gColumns, rows:gRows} = GroupsTableData(selectedSubjects);
+
   // Mostrar la tabla de las carreras por defecto
   const [showCareers, setShowCareers] = useState(true);
 
@@ -60,6 +63,7 @@ function Tables() {
   const [showGroups, setShowGroups] = useState(false);
 
   const [show2, setShow2] = useState(false);
+
   /* const [checked, setChecked] = React.useState([0]);
   const [open, setOpen] = React.useState(false); */
   /* const handleClick = () => {
@@ -82,7 +86,6 @@ function Tables() {
    * Al pedir que se muestren las materias dejar de mostrarla
    * Mostrar las asignaturas
    * */
-  
 
   const goToSubjects = () => {
     if (showCareers === true) {
@@ -105,6 +108,8 @@ function Tables() {
       setShowGroups(true);
     }
   };
+
+  // Obtener grupos de asignaturas seleccionadas
 
   /*
   const settables1 = () => {
@@ -342,12 +347,12 @@ function Tables() {
                           <ListItemIcon>
                             <InboxIcon />
                           </ListItemIcon>
-                          <ListItemText primary={element.} />
+                          <ListItemText primary={element} />
                         </ListItemButton>
                       </AccordionSummary>
                       <AccordionDetails>
                         <DataTable
-                          table={{ columns: tColumns, rows: foptaRows }}
+                          table={{ columns: gColumns, rows: gRows }}
                           isSorted={false}
                           entriesPerPage={false}
                           showTotalEntries={false}
