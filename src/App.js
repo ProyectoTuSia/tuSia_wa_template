@@ -95,27 +95,13 @@ export default function App() {
   }, [pathname]);
 
   const getRoutes = (allRoutes) =>
-    allRoutes.map(({ roles = [], collapse, route, component, key }) => {
-      if (collapse) {
-        return getRoutes(collapse);
+    allRoutes.map((route) => {
+      if (route.collapse) {
+        return getRoutes(route.collapse);
       }
 
-      if (route) {
-        return (
-          <Route
-            exact
-            path={route}
-            element={
-              //acceder al servivio o al locarStorage para obtener el role del usuario uwu
-              roles.includes(localStorage.getItem("role")) ? (
-                component
-              ) : (
-                <Navigate to={"/unauthoraized"} replace />
-              )
-            }
-            key={key}
-          />
-        );
+      if (route.route) {
+        return <Route exact path={route.route} element={route.component} key={route.key} />;
       }
 
       return null;
@@ -165,14 +151,8 @@ export default function App() {
         )}
         {layout === "vr" && <Configurator />}
         <Routes>
-          <Route
-            exact
-            path={"/unauthoraized"}
-            element={<h1>unauthoraized</h1>}
-            key={"unauthoraized"}
-          />
-          {getRoutes(routes)};
-          {/* <Route path="*" element={<Navigate to="/authentication/sign-in" />} /> */}
+          {getRoutes(routes)}
+          <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -196,13 +176,7 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        {/* <Route path="*" element={<Navigate to="/authentication/sign-in" />} /> */}
-        <Route
-          exact
-          path={"/unauthoraized"}
-          element={<h1>unauthoraized</h1>}
-          key={"unauthoraized"}
-        />
+        <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
       </Routes>
     </ThemeProvider>
   );
