@@ -84,7 +84,7 @@ function ScheduleData(props) {
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
-          <ListItemText primary={props.group} />
+          <ListItemText primary={"Grupo "+(listSchedulesOfGroup[0].subjectGroup.number).toString()+" "+(listSchedulesOfGroup[0].subjectGroup.subject.name).toString()} />
         </ListItemButton>
       </AccordionSummary>
       <AccordionDetails>
