@@ -34,6 +34,13 @@ export default function SubjectsData(username, careerCheckList) {
     }
   };
 
+  /**
+   * Metodo para vaciar el hook al devolverse
+   */
+   const emptySelectedSubjects = () => {
+    setSelectedSubjects([]);
+  };
+
   // Definir cuando no deberia hacerse la query
   const shouldPause = username === undefined || careerCheckList === [];
 
@@ -53,6 +60,7 @@ export default function SubjectsData(username, careerCheckList) {
     return {
       columns: [],
       selectedSubjects,
+      emptySelectedSubjects,
     };
   }
 
@@ -60,6 +68,7 @@ export default function SubjectsData(username, careerCheckList) {
     return {
       columns: [],
       selectedSubjects,
+      emptySelectedSubjects,
     };
   }
 
@@ -235,5 +244,6 @@ export default function SubjectsData(username, careerCheckList) {
       ),
     })),
     selectedSubjects,
+    emptySelectedSubjects,
   };
 }

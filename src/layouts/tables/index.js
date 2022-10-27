@@ -49,6 +49,7 @@ function Tables() {
     dobliRows,
     leRows,
     nivRows,
+    emptySelectedSubjects,
   } = TypologysTabledata(username, careerCheckList);
 
   // Mostrar la tabla de las carreras por defecto
@@ -100,6 +101,15 @@ function Tables() {
       setShowSubjects(false);
       emptyIdCheckeados();
       setShowCareers(true);
+    }
+  };
+
+  const returnToSubject = () => {
+    if (showGroups === true) {
+      setSelectedGroups([]);
+      setShowGroups(false);
+      emptySelectedSubjects();
+      setShowSubjects(true);
     }
   };
 
@@ -351,9 +361,16 @@ function Tables() {
 
           {showGroups && (
             <Grid item xs={3}>
-              <Card>
-                <MDButton onClick={() => console.log(selectedGroups)}> Mostrar Horario </MDButton>
-              </Card>
+              <MDBox>
+                <Card>
+                  <MDButton onClick={() => returnToSubject()}> Regresar </MDButton>
+                </Card>
+              </MDBox>
+              <MDBox pt={3}>
+                <Card>
+                  <MDButton onClick={() => console.log(selectedGroups)}> Mostrar Horario </MDButton>
+                </Card>
+              </MDBox>
             </Grid>
           )}
 
