@@ -20,6 +20,19 @@ import projectsTableData from "layouts/tables/data/projectsTableData";
 import MDButton from "components/MDButton";
 import { Icon } from "@mui/material";
 import MDInput from "components/MDInput";
+import { useMutation, useQuery } from "urql";
+
+const DATA_MUTATION = `
+mutation Mutation($courseCode: Int!, $courseGroup: Int!, $weights: gm_WeightsInput!) {
+  gm_updateGradeWeights(courseCode: $courseCode, courseGroup: $courseGroup, weights: $weights) {
+    status
+    weights{
+      weight
+      description
+    }
+  }
+}
+`;
 
 function EditWeight() {
   const [idWeight, setIdWeight] = useState("weight_1");
@@ -29,12 +42,13 @@ function EditWeight() {
     state: { course },
   } = useLocation();
   const { columns, rows: weightrows } = authorsTableData();
-  // console.log(course);
 
   const [rows, setrows] = useState(weightrows);
   useEffect(() => {
     // console.log(rows, "useEffectrows");
   }, [rows]);
+
+  const [submitMutationResult, submitMutation] = useMutation(DATA_MUTATION);
 
   const handleAdd = () => {
     const newIdWeight = idWeight.replace(/(\d+)$/, function (match, number) {
@@ -56,7 +70,7 @@ function EditWeight() {
           weight: (
             <MDInput
               name="w1"
-              onChange={(e, { name, value }) => {
+              onChange={(e, { value }) => {
                 setrows(...rows);
               }}
               label="Peso"
@@ -76,17 +90,42 @@ function EditWeight() {
   };
 
   const handleSubmit = () => {
-    let gm_WeightsInput = [];
-    for (let i = 0; i <= rows.lenght + 1; i++) {
-      console.log("desde for");
-      curGrade = {
-        weight: document.getElementById(`weight_${i}`).value,
-        description: document.getElementById(`description${i}`).value,
+    let aux_gm_WeightsInput = [];
+    let gm_WeightsInput = {};
+    let variables = {};
+
+    for (let i = 1; i <= rows.length; i++) {
+      let curGrade = {
+        description: document.getElementById(`description_${i}`).value,
+        weight: parseInt(document.getElementById(`weight_${i}`).value),
       };
-      gm_WeightsInput.push(curGrade);
+      aux_gm_WeightsInput.push(curGrade);
     }
-    console.log(gm_WeightsInput);
+    gm_WeightsInput = {
+      weights: aux_gm_WeightsInput,
+    };
+    console.log(course);
+
+    variables = {
+      courseCode: course.courseCode,
+      courseGroup: course.groupNumber,
+      weights: gm_WeightsInput,
+    };
+    console.log(variables, "variables");
+    // submitMutation(variables);
+
+    submitMutation(variables).then((submitMutationResult) => {
+      if (submitMutationResult.error) {
+        console.error("Oh no!", submitMutationResult.error);
+      }
+    });
+
+    // const { data, fetching, error } = submitMutationResult;
+    // console.log(data, "data");
+    // console.log(fetching, "fetching");
+    // console.log(error, "error");
   };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
