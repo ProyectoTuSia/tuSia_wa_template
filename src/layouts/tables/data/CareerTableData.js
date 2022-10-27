@@ -26,14 +26,15 @@ export default function CareerData() {
 
   //Metodo para modificar la lista de los id checkeados
   const modificarCheckeados = (event) => {
-    //Si ya estaba en la lista de checkeados, quitarlo
-    if (!event.target.checked) {
-      idCheckeados.splice(idCheckeados.indexOf(event.target.id), 1);
-    } else {
-      //Si no estaba, agregarlo a la lista
+    if (event.target.checked) {
+      //Si esta checkeado agregarlo a la lista de checkeados
       idCheckeados.push(event.target.id);
+    } else {
+      //Si ya no esta checkeado quitarlo de la lista de checkeados
+      idCheckeados.splice(idCheckeados.indexOf(event.target.id), 1);
     }
   };
+
 
   /**
    * Metodo para vaciar el hook al devolverse

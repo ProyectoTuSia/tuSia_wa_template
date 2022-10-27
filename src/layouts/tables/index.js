@@ -35,6 +35,7 @@ function Tables() {
 
   const {
     columns: tColumns,
+    selectedSubjects,
     foptaRows,
     fobliRows,
     doptaRows,
@@ -42,6 +43,7 @@ function Tables() {
     leRows,
     nivRows,
   } = TypologysTabledata(username, careerCheckList);
+
 
   // Mostrar la tabla de las carreras por defecto
   const [showCareers, setShowCareers] = useState(true);

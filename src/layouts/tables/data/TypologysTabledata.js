@@ -5,6 +5,7 @@ import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
 import { Checkbox } from "@mui/material";
 import { useQuery } from "urql";
+import select from "assets/theme/components/form/select";
 
 const DATA_QUERY_SUBJECTS = `
 query($careerCode: Int!, $username: String!) {
@@ -19,6 +20,21 @@ query($careerCode: Int!, $username: String!) {
 }`;
 
 export default function SubjectsData(username, careerCheckList) {
+
+  //Hook para saber los id de las asignaturas seleccionadas
+  const [selectedSubjects, setSelectedSubjects] = useState([]);
+
+  //Metodo para modificar la lista de los id checkeados
+  const modifySelectedSubjects = (event) => {
+    if (event.target.checked) {
+      //Si esta checkeado agregarlo a la lista de checkeados
+      selectedSubjects.push(event.target.id);
+    } else {
+      //Si ya no esta checkeado quitarlo de la lista de checkeados
+      selectedSubjects.splice(selectedSubjects.indexOf(event.target.id), 1);
+    }
+  };
+
   // Definir cuando no deberia hacerse la query
   const shouldPause = username === undefined || careerCheckList === [];
 
@@ -37,14 +53,14 @@ export default function SubjectsData(username, careerCheckList) {
   if (fetching) {
     return {
       columns: [],
-      rows: [],
+      selectedSubjects,
     };
   }
 
   if (error) {
     return {
       columns: [],
-      rows: [],
+      selectedSubjects,
     };
   }
 
@@ -85,7 +101,7 @@ export default function SubjectsData(username, careerCheckList) {
     foptaRows: foptaSubjects.map((element) => ({
       Seleccionar: (
         <MDBox ml={-1}>
-          <Checkbox id={element.subject.code}> </Checkbox>
+          <Checkbox id={element.subject.code} onChange={modifySelectedSubjects} />
         </MDBox>
       ),
       Codigo: (
@@ -108,7 +124,7 @@ export default function SubjectsData(username, careerCheckList) {
     fobliRows: fobliSubjects.map((element) => ({
       Seleccionar: (
         <MDBox ml={-1}>
-          <Checkbox id={element.subject.code}> </Checkbox>
+          <Checkbox id={element.subject.code} onChange={modifySelectedSubjects} />
         </MDBox>
       ),
       Codigo: (
@@ -131,7 +147,7 @@ export default function SubjectsData(username, careerCheckList) {
     doptaRows: doptaSubjects.map((element) => ({
       Seleccionar: (
         <MDBox ml={-1}>
-          <Checkbox id={element.subject.code}> </Checkbox>
+          <Checkbox id={element.subject.code} onChange={modifySelectedSubjects} />
         </MDBox>
       ),
       Codigo: (
@@ -154,7 +170,7 @@ export default function SubjectsData(username, careerCheckList) {
     dobliRows: dobliSubjects.map((element) => ({
       Seleccionar: (
         <MDBox ml={-1}>
-          <Checkbox id={element.subject.code}> </Checkbox>
+          <Checkbox id={element.subject.code} onChange={modifySelectedSubjects} />
         </MDBox>
       ),
       Codigo: (
@@ -177,7 +193,7 @@ export default function SubjectsData(username, careerCheckList) {
     leRows: leSubjects.map((element) => ({
       Seleccionar: (
         <MDBox ml={-1}>
-          <Checkbox id={element.subject.code}> </Checkbox>
+          <Checkbox id={element.subject.code} onChange={modifySelectedSubjects} />
         </MDBox>
       ),
       Codigo: (
@@ -200,7 +216,7 @@ export default function SubjectsData(username, careerCheckList) {
     nivRows: nivSubjects.map((element) => ({
       Seleccionar: (
         <MDBox ml={-1}>
-          <Checkbox id={element.subject.code}> </Checkbox>
+          <Checkbox id={element.subject.code} onChange={modifySelectedSubjects} />
         </MDBox>
       ),
       Codigo: (
@@ -219,5 +235,6 @@ export default function SubjectsData(username, careerCheckList) {
         </MDTypography>
       ),
     })),
+    selectedSubjects,
   };
 }
