@@ -26,6 +26,7 @@ query ($subjectCode: Int!, $groupNumber: Int!) {
         start_time
         end_time
         day
+        id
       }
     }
 }`;
@@ -49,7 +50,6 @@ function ScheduleData(props) {
     return <MDBox />;
   }
 
-  console.log(data);
   const listSchedulesOfGroup = data.ins_getSchedulesOfGroup;
 
   const columns = [
@@ -74,6 +74,8 @@ function ScheduleData(props) {
       </MDTypography>
     ),
   }));
+
+  listSchedulesOfGroup.map((element) => props.selectedSchedules.push(element.schedule.id));
 
   return (
     <Accordion>

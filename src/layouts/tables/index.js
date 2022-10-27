@@ -68,6 +68,9 @@ function Tables() {
   // Almacenar los grupos seleccionados de las materias
   const [selectedGroups, setSelectedGroups] = useState([]);
 
+  // Almacenar los codigos de los horarios de los grupos seleccionados
+  const [selectedSchedules, setSelectedSchedules] = useState([]);
+
   /* const [checked, setChecked] = React.useState([0]);
   const [open, setOpen] = React.useState(false); */
   /* const handleClick = () => {
@@ -402,7 +405,7 @@ function Tables() {
                 </MDBox>
                 <MDBox pt={2}>
                   {selectedGroups.map((element) => (
-                    <ScheduleTableData group={element} />
+                    <ScheduleTableData group={element} selectedSchedules={selectedSchedules} />
                   ))}
                 </MDBox>
               </Card>
@@ -411,7 +414,7 @@ function Tables() {
           {showSchedule && (
             <Grid item xs={3}>
               <Card>
-                <MDButton> Finalizar Inscripción </MDButton>
+                <MDButton onClick={() => console.log(selectedSchedules)}> Finalizar Inscripción </MDButton>
               </Card>
             </Grid>
           )}

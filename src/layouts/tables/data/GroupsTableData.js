@@ -42,7 +42,7 @@ function GroupsData(props) {
       // Si ya no esta checkeado quitarlo de la lista de checkeados
       props.selectedGroups.splice(props.selectedGroups.indexOf(event.target.id), 1);
     }
-  };
+  }
 
   const [result, reexecuteQuery] = useQuery({
     query: DATA_QUERY_GROUPS,
