@@ -20,17 +20,16 @@ query($careerCode: Int!, $username: String!) {
 }`;
 
 export default function SubjectsData(username, careerCheckList) {
-
-  //Hook para saber los id de las asignaturas seleccionadas
+  // Hook para saber los id de las asignaturas seleccionadas
   const [selectedSubjects, setSelectedSubjects] = useState([]);
 
-  //Metodo para modificar la lista de los id checkeados
+  // Metodo para modificar la lista de los id checkeados
   const modifySelectedSubjects = (event) => {
     if (event.target.checked) {
-      //Si esta checkeado agregarlo a la lista de checkeados
+      // Si esta checkeado agregarlo a la lista de checkeados
       selectedSubjects.push(event.target.id);
     } else {
-      //Si ya no esta checkeado quitarlo de la lista de checkeados
+      // Si ya no esta checkeado quitarlo de la lista de checkeados
       selectedSubjects.splice(selectedSubjects.indexOf(event.target.id), 1);
     }
   };

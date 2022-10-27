@@ -31,7 +31,13 @@ import CareerTableData from "layouts/tables/data/CareerTableData";
 
 function Tables() {
   // const { columns: pColumns, rows: pRows } = projectsTableData();
-  const { columns: cColumns, rows: cRows, username, careerCheckList, emptyIdCheckeados } = CareerTableData();
+  const {
+    columns: cColumns,
+    rows: cRows,
+    username,
+    careerCheckList,
+    emptyIdCheckeados,
+  } = CareerTableData();
 
   const {
     columns: tColumns,
@@ -44,14 +50,15 @@ function Tables() {
     nivRows,
   } = TypologysTabledata(username, careerCheckList);
 
-
   // Mostrar la tabla de las carreras por defecto
   const [showCareers, setShowCareers] = useState(true);
 
   // La tabla de asignaturas tenerla oculta al inicio
   const [showSubjects, setShowSubjects] = useState(false);
 
-  const [show1, setShow1] = useState(false);
+  // La tabla de grupos tenerla oculta al inicio
+  const [showGroups, setShowGroups] = useState(false);
+
   const [show2, setShow2] = useState(false);
   /* const [checked, setChecked] = React.useState([0]);
   const [open, setOpen] = React.useState(false); */
@@ -75,6 +82,8 @@ function Tables() {
    * Al pedir que se muestren las materias dejar de mostrarla
    * Mostrar las asignaturas
    * */
+  
+
   const goToSubjects = () => {
     if (showCareers === true) {
       setShowCareers(false);
@@ -90,20 +99,29 @@ function Tables() {
     }
   };
 
+  const goToGroups = () => {
+    if (showSubjects === true) {
+      setShowSubjects(false);
+      setShowGroups(true);
+    }
+  };
+
+  /*
   const settables1 = () => {
-    if (show1 === true) {
+    if (showGroups === true) {
       setShow2(false);
     }
-    setShow1((prev1) => !prev1);
+    setShowGroups((prev1) => !prev1);
   };
 
   const settables2 = () => {
     if (showSubjects === true) {
-      setShow1(false);
+      setShowGroups(false);
       setShow2(false);
     }
     setShowSubjects((prev1) => !prev1);
   };
+  */
 
   return (
     <DashboardLayout>
@@ -162,7 +180,7 @@ function Tables() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    Projects Table
+                    Seleccione las asignaturas que desea inscribir
                   </MDTypography>
                 </MDBox>
                 <MDBox pt={2}>
@@ -293,12 +311,13 @@ function Tables() {
               </MDBox>
               <MDBox pt={3}>
                 <Card>
-                  <MDButton onClick={() => settables1()}> Mostrar Grupos </MDButton>
+                  <MDButton onClick={() => goToGroups()}> Mostrar Grupos </MDButton>
                 </Card>
               </MDBox>
             </Grid>
           )}
-          {show1 && (
+
+          {showGroups && (
             <Grid item xs={9}>
               <Card>
                 <MDBox
@@ -312,28 +331,44 @@ function Tables() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    Elija la tipologia de las materias que desea cursar
+                    Seleccione los grupos de las asignaturas que desea cursar
                   </MDTypography>
                 </MDBox>
-                <MDBox pt={3}>
-                  <DataTable
-                    table={{ columns: tColumns, rows: cRows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
+                <MDBox pt={2}>
+                  {selectedSubjects.map((element) => (
+                    <Accordion>
+                      <AccordionSummary expandIcon={<ExpandMore />}>
+                        <ListItemButton>
+                          <ListItemIcon>
+                            <InboxIcon />
+                          </ListItemIcon>
+                          <ListItemText primary={element.} />
+                        </ListItemButton>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <DataTable
+                          table={{ columns: tColumns, rows: foptaRows }}
+                          isSorted={false}
+                          entriesPerPage={false}
+                          showTotalEntries={false}
+                          noEndBorder
+                        />
+                      </AccordionDetails>
+                    </Accordion>
+                  ))}
                 </MDBox>
               </Card>
             </Grid>
           )}
-          {show1 && (
+
+          {showGroups && (
             <Grid item xs={3}>
               <Card>
                 <MDButton onClick={() => setShow2((prev1) => !prev1)}> Mostrar Horario </MDButton>
               </Card>
             </Grid>
           )}
+
           {show2 && (
             <Grid item xs={9}>
               <Card>
@@ -366,7 +401,7 @@ function Tables() {
           {show2 && (
             <Grid item xs={3}>
               <Card>
-                <MDButton> Finalizar Inscripsión </MDButton>
+                <MDButton> Finalizar Inscripción </MDButton>
               </Card>
             </Grid>
           )}
