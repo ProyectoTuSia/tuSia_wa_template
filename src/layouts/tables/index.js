@@ -51,8 +51,6 @@ function Tables() {
     nivRows,
   } = TypologysTabledata(username, careerCheckList);
 
-  const {columns:gColumns, rows:gRows} = GroupsTableData(selectedSubjects);
-
   // Mostrar la tabla de las carreras por defecto
   const [showCareers, setShowCareers] = useState(true);
 
@@ -61,6 +59,9 @@ function Tables() {
 
   // La tabla de grupos tenerla oculta al inicio
   const [showGroups, setShowGroups] = useState(false);
+
+  // Almacenar los grupos seleccionados de las materias
+  const [selectedGroups, setSelectedGroups] = useState([]);
 
   const [show2, setShow2] = useState(false);
 
@@ -341,25 +342,7 @@ function Tables() {
                 </MDBox>
                 <MDBox pt={2}>
                   {selectedSubjects.map((element) => (
-                    <Accordion>
-                      <AccordionSummary expandIcon={<ExpandMore />}>
-                        <ListItemButton>
-                          <ListItemIcon>
-                            <InboxIcon />
-                          </ListItemIcon>
-                          <ListItemText primary={element} />
-                        </ListItemButton>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <DataTable
-                          table={{ columns: gColumns, rows: gRows }}
-                          isSorted={false}
-                          entriesPerPage={false}
-                          showTotalEntries={false}
-                          noEndBorder
-                        />
-                      </AccordionDetails>
-                    </Accordion>
+                    <GroupsTableData subjectCode={element} selectedGroups={selectedGroups} />
                   ))}
                 </MDBox>
               </Card>
@@ -369,7 +352,7 @@ function Tables() {
           {showGroups && (
             <Grid item xs={3}>
               <Card>
-                <MDButton onClick={() => setShow2((prev1) => !prev1)}> Mostrar Horario </MDButton>
+                <MDButton onClick={() => console.log(selectedGroups)}> Mostrar Horario </MDButton>
               </Card>
             </Grid>
           )}

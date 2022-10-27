@@ -3,9 +3,15 @@ import React, { useState } from "react";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
-import { Checkbox } from "@mui/material";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import { Checkbox, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import DataTable from "examples/Tables/DataTable";
 import { useQuery } from "urql";
-import jwtDecode from "jwt-decode";
 
 const DATA_QUERY_GROUPS = `
 query ($subjectCode: Int!) {
@@ -14,66 +20,103 @@ query ($subjectCode: Int!) {
       slots
       subject {
         name
+        code
       }
     }
   }`;
 
-export default function GroupsData(selectedSubjects) {
+function GroupsData(props) {
+  /*
+  const shouldPause =
+    selectedSubjects[0] === undefined ||
+    selectedSubjects.length === 0 ||
+    selectedSubjects === undefined;
 
-  const shouldPause= selectedSubjects[0] === undefined || selectedSubjects.length === 0 || selectedSubjects === undefined;
-  
+  */
+
+  const checkGroup = (event) => {
+    if (event.target.checked) {
+      // Si esta checkeado agregarlo a la lista de checkeados
+      props.selectedGroups.push(event.target.id);
+    } else {
+      // Si ya no esta checkeado quitarlo de la lista de checkeados
+      props.selectedGroups.splice(props.selectedGroups.indexOf(event.target.id), 1);
+    }
+  }
+
   const [result, reexecuteQuery] = useQuery({
     query: DATA_QUERY_GROUPS,
     variables: {
-      subjectCode: parseInt(selectedSubjects[0]),
+      subjectCode: parseInt(props.subjectCode),
     },
-    pause: shouldPause,
   });
 
   const { data, fetching, error } = result;
 
   if (fetching) {
-    return {
-      columns: [],
-      rows: [],
-    };
+    return <MDBox />;
   }
 
   if (error) {
-    return {
-      columns: [],
-      rows: [],
-    };
+    return <MDBox />;
   }
 
-  console.log(data);
+  const listGroupsOfSubject = data.ins_getAllGroupsOfSubject;
 
-  return {
-    columns: [
-      { Header: "Seleccionar", accessor: "Seleccionar", align: "right" },
-      { Header: "Código", accessor: "Codigo", align: "center" },
-      { Header: "Nombre", accessor: "Nombre", align: "left" },
-    ],
+  const columns = [
+    { Header: "Seleccionar", accessor: "Seleccionar", align: "right" },
+    { Header: "Número", accessor: "Numero", align: "center" },
+    { Header: "Cupos", accessor: "Cupos", align: "left" },
+  ];
 
-    rows: [
-      {
-        Seleccionar: (
-          <MDBox ml={-1}>
-            <Checkbox />
-          </MDBox>
-        ),
-        Codigo: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {data ? data.ins_getAllGroupsOfSubject[0].number : ""}
-          </MDTypography>
-        ),
-        Nombre: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            {data ? data.ins_getAllGroupsOfSubject[0].slots : ""}
-          </MDTypography>
-        ),
-      },
-    ],
-  };
+  const rows = listGroupsOfSubject.map((element) => ({
+    Seleccionar: (
+      <MDBox ml={-1}>
+        <Checkbox
+          id={element.number.toString()+"-"+element.subject.code.toString()}
+          onChange={checkGroup}
+        />
+      </MDBox>
+    ),
+    Numero: (
+      <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+        {element.number}
+      </MDTypography>
+    ),
+    Cupos: (
+      <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+        {element.slots}
+      </MDTypography>
+    ),
+  }));
 
+  return (
+    <Accordion>
+      <AccordionSummary expandIcon={<ExpandMore />}>
+        <ListItemButton>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary={data.ins_getAllGroupsOfSubject[0].subject.name} />
+        </ListItemButton>
+      </AccordionSummary>
+      <AccordionDetails>
+        <DataTable
+          table={{ columns, rows }}
+          isSorted={false}
+          entriesPerPage={false}
+          showTotalEntries={false}
+          noEndBorder
+        />
+      </AccordionDetails>
+    </Accordion>
+  );
 }
+
+class GroupsTableData extends React.Component {
+  render() {
+    return <GroupsData {...this.props} />;
+  }
+}
+
+export default GroupsTableData;
