@@ -29,6 +29,7 @@ import DataTable from "examples/Tables/DataTable";
 import TypologysTabledata from "layouts/tables/data/TypologysTabledata";
 import CareerTableData from "layouts/tables/data/CareerTableData";
 import GroupsTableData from "layouts/tables/data/GroupsTableData";
+import ScheduleTableData from "./data/ScheduleTableData";
 
 function Tables() {
   // const { columns: pColumns, rows: pRows } = projectsTableData();
@@ -61,10 +62,11 @@ function Tables() {
   // La tabla de grupos tenerla oculta al inicio
   const [showGroups, setShowGroups] = useState(false);
 
+  // La tabla de los horarios seleccionadas tenerla oculta al inicio
+  const [showSchedule, setShowSchedule] = useState(false);
+
   // Almacenar los grupos seleccionados de las materias
   const [selectedGroups, setSelectedGroups] = useState([]);
-
-  const [show2, setShow2] = useState(false);
 
   /* const [checked, setChecked] = React.useState([0]);
   const [open, setOpen] = React.useState(false); */
@@ -117,6 +119,13 @@ function Tables() {
     if (showSubjects === true) {
       setShowSubjects(false);
       setShowGroups(true);
+    }
+  };
+
+  const goToSchedule = () => {
+    if (showGroups === true) {
+      setShowGroups(false);
+      setShowSchedule(true);
     }
   };
 
@@ -368,13 +377,13 @@ function Tables() {
               </MDBox>
               <MDBox pt={3}>
                 <Card>
-                  <MDButton onClick={() => console.log(selectedGroups)}> Mostrar Horario </MDButton>
+                  <MDButton onClick={() => goToSchedule()}> Mostrar Horario </MDButton>
                 </Card>
               </MDBox>
             </Grid>
           )}
 
-          {show2 && (
+          {showSchedule && (
             <Grid item xs={9}>
               <Card>
                 <MDBox
@@ -388,22 +397,18 @@ function Tables() {
                   coloredShadow="info"
                 >
                   <MDTypography variant="h6" color="white">
-                    Elija la tipologia de las materias que desea cursar
+                    Verifica el horario de cada grupo que seleccionaste
                   </MDTypography>
                 </MDBox>
-                <MDBox pt={3}>
-                  <DataTable
-                    table={{ columns: tColumns, rows: cRows }}
-                    isSorted={false}
-                    entriesPerPage={false}
-                    showTotalEntries={false}
-                    noEndBorder
-                  />
+                <MDBox pt={2}>
+                  {selectedGroups.map((element) => (
+                    <ScheduleTableData group={element} />
+                  ))}
                 </MDBox>
               </Card>
             </Grid>
           )}
-          {show2 && (
+          {showSchedule && (
             <Grid item xs={3}>
               <Card>
                 <MDButton> Finalizar Inscripción </MDButton>

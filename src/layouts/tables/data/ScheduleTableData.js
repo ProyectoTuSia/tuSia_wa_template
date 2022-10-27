@@ -13,41 +13,29 @@ import { Checkbox, Accordion, AccordionSummary, AccordionDetails } from "@mui/ma
 import DataTable from "examples/Tables/DataTable";
 import { useQuery } from "urql";
 
-const DATA_QUERY_GROUPS = `
-query ($subjectCode: Int!) {
-    ins_getAllGroupsOfSubject(subjectCode: $subjectCode) {
-      number
-      slots
-      subject {
-        name
-        code
+const DATA_QUERY_SCHEDULE = `
+query ($subjectCode: Int!, $groupNumber: Int!) {
+    ins_getSchedulesOfGroup(subjectCode: $subjectCode, groupNumber: $groupNumber) {
+      subjectGroup {
+        number
+        subject {
+          name
+        }
+      }
+      schedule {
+        start_time
+        end_time
+        day
       }
     }
-  }`;
+}`;
 
-function GroupsData(props) {
-  /*
-  const shouldPause =
-    selectedSubjects[0] === undefined ||
-    selectedSubjects.length === 0 ||
-    selectedSubjects === undefined;
-
-  */
-
-  const checkGroup = (event) => {
-    if (event.target.checked) {
-      // Si esta checkeado agregarlo a la lista de checkeados
-      props.selectedGroups.push(event.target.id);
-    } else {
-      // Si ya no esta checkeado quitarlo de la lista de checkeados
-      props.selectedGroups.splice(props.selectedGroups.indexOf(event.target.id), 1);
-    }
-  };
-
+function ScheduleData(props) {
   const [result, reexecuteQuery] = useQuery({
-    query: DATA_QUERY_GROUPS,
+    query: DATA_QUERY_SCHEDULE,
     variables: {
-      subjectCode: parseInt(props.subjectCode),
+      subjectCode: parseInt(props.group.split("-")[1]),
+      groupNumber: parseInt(props.group.split("-")[0]),
     },
   });
 
@@ -61,31 +49,28 @@ function GroupsData(props) {
     return <MDBox />;
   }
 
-  const listGroupsOfSubject = data.ins_getAllGroupsOfSubject;
+  console.log(data);
+  const listSchedulesOfGroup = data.ins_getSchedulesOfGroup;
 
   const columns = [
-    { Header: "Seleccionar", accessor: "Seleccionar", align: "right" },
-    { Header: "Número", accessor: "Numero", align: "center" },
-    { Header: "Cupos", accessor: "Cupos", align: "left" },
+    { Header: "Dia", accessor: "Dia", align: "right" },
+    { Header: "Hora Inicio", accessor: "HoraInicio", align: "center" },
+    { Header: "Hora Fin", accessor: "HoraFin", align: "left" },
   ];
-
-  const rows = listGroupsOfSubject.map((element) => ({
-    Seleccionar: (
-      <MDBox ml={-1}>
-        <Checkbox
-          id={element.number.toString()+"-"+element.subject.code.toString()}
-          onChange={checkGroup}
-        />
-      </MDBox>
-    ),
-    Numero: (
+  const rows = listSchedulesOfGroup.map((element) => ({
+    Dia: (
       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-        {element.number}
+        {element.schedule.day}
       </MDTypography>
     ),
-    Cupos: (
+    HoraInicio: (
       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-        {element.slots}
+        {element.schedule.start_time}
+      </MDTypography>
+    ),
+    HoraFin: (
+      <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+        {element.schedule.end_time}
       </MDTypography>
     ),
   }));
@@ -97,7 +82,7 @@ function GroupsData(props) {
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
-          <ListItemText primary={data.ins_getAllGroupsOfSubject[0].subject.name} />
+          <ListItemText primary={props.group} />
         </ListItemButton>
       </AccordionSummary>
       <AccordionDetails>
@@ -113,10 +98,10 @@ function GroupsData(props) {
   );
 }
 
-class GroupsTableData extends React.Component {
+class ScheduleTableData extends React.Component {
   render() {
-    return <GroupsData {...this.props} />;
+    return <ScheduleData {...this.props} />;
   }
 }
 
-export default GroupsTableData;
+export default ScheduleTableData;
