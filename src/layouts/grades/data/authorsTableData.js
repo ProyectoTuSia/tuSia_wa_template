@@ -3,6 +3,7 @@
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
+import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import EditWeight from "../editWeight";
 import MDAvatar from "components/MDAvatar";
@@ -14,8 +15,8 @@ import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 
-import { useQuery } from "urql";
-import { useState, useEffect } from "react";
+import { useQuery, useMutation } from "urql";
+import { useState, useEffect, useRef } from "react";
 
 // Sweet Aleret
 import Swal from "sweetalert2";
@@ -39,6 +40,8 @@ const DATA_MUTATION_CONSOLIDATE = `
 export default function data() {
   const navigate = useNavigate();
 
+  const buttonConsolidate = useRef();
+
   const [selectedCourse, setselectedCourse] = useState(() => ({
     courseName: "",
     courseCode: "",
@@ -58,9 +61,6 @@ export default function data() {
   });
   // Data, fetching and error of the query
   const { data, fetching, error } = result;
-  if (data) {
-    console.log(data["gm_getProfessorGroups"][0]);
-  }
 
   useEffect(() => {
     // if (result.fetching) return;
@@ -73,12 +73,26 @@ export default function data() {
     // console.log(data);
     return () => clearTimeout(timerId);
   }, [result.fetching, reexecuteQuery, data]);
-  
-    // Query GraphQL to consolidate grades
+
+  // Query GraphQL to consolidate grades
   const [resultConsolidate, executeMutationConsolidate] = useMutation(DATA_MUTATION_CONSOLIDATE);
 
+  const validateConsolidation = () => {
+    const cookieValue = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("consolidado="))
+      ?.split("=")[1];
+
+    if (cookieValue === "true") {
+      buttonConsolidate.current.disabled = true;
+      return true;
+    }
+  };
+
   const consolidateNotes = (event, course) => {
-    console.log(course);
+    if (validateConsolidation()) {
+      return;
+    }
     Swal.fire({
       title: "¿Deseas consolidar las notas?",
       text: "Si lo haces, no podrás volver a editar las notas de los alumnos",
@@ -90,6 +104,7 @@ export default function data() {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
+        console.log("consolidar notas");
         const variables = { courseCode: course.courseCode, courseGroup: course.groupNumber };
         executeMutationConsolidate(variables).then((result) => {
           if (result.error) {
@@ -101,12 +116,14 @@ export default function data() {
             });
             return;
           }
-          Swal.fire({
-            icon: "success",
-            title: "Notas Consolidadas",
-            showConfirmButton: false,
-            timer: 2500,
-          });
+        });
+        document.cookie = "consolidado=true; SameSite=None; Secure";
+
+        Swal.fire({
+          icon: "success",
+          title: "Notas Consolidadas",
+          showConfirmButton: false,
+          timer: 2500,
         });
       }
     });
@@ -179,7 +196,12 @@ export default function data() {
               </MDTypography>
             ),
             consolidateGrades: (
-              <MDButton onClick={(event) => consolidateNotes(event, course)}>Consolidar</MDButton>
+              <MDButton
+                ref={buttonConsolidate}
+                onClick={(event) => consolidateNotes(event, course)}
+              >
+                Consolidar
+              </MDButton>
             ),
           };
         })

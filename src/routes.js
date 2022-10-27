@@ -39,7 +39,6 @@ import Icon from "@mui/material/Icon";
 
 const routes = [
   {
-    roles: ["student", "teacher"],
     type: "collapse",
     name: "Mi Horario",
     key: "mi-horario",
@@ -80,7 +79,6 @@ const routes = [
     component: <RTL />,
   },
   {
-    roles: ["teacher"],
     type: "collapse",
     name: "Grades",
     key: "grades",
@@ -97,7 +95,6 @@ const routes = [
     component: <Profile />,
   },
   {
-    roles: ["teacher", "student", null],
     type: "collapse",
     name: "Sign In",
     key: "sign-in",
@@ -114,7 +111,6 @@ const routes = [
     component: <SignUp />,
   },
   {
-    roles: ["student"],
     type: "collapse",
     name: "My Schedule",
     key: "my-schedule",
@@ -123,7 +119,6 @@ const routes = [
     component: <Schedule />,
   },
   {
-    roles: ["teacher"],
     type: "",
     name: "editWeight",
     key: "edit-weight",
@@ -132,7 +127,6 @@ const routes = [
     component: <EditWeight />,
   },
   {
-    roles: ["teacher"],
     type: "",
     name: "uploadGrades",
     key: "upload-grades",

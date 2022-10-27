@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { forwardRef } from "react";
 
 // prop-types is a library for typechecking of props
@@ -57,5 +58,7 @@ MDButton.propTypes = {
   iconOnly: PropTypes.bool,
   children: PropTypes.node.isRequired,
 };
+
+MDButton.displayName = "MDButton";
 
 export default MDButton;
