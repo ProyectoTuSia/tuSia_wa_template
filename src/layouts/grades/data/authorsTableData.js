@@ -17,6 +17,9 @@ import team4 from "assets/images/team-4.jpg";
 import { useQuery } from "urql";
 import { useState, useEffect } from "react";
 
+// Sweet Aleret
+import Swal from "sweetalert2";
+
 const DATA_QUERY = `query Query($professorUsername: String!) {
   gm_getProfessorGroups(professorUsername: $professorUsername) {
     courseName
@@ -25,6 +28,12 @@ const DATA_QUERY = `query Query($professorUsername: String!) {
     
   }
 }
+`;
+
+const DATA_MUTATION_CONSOLIDATE = `
+  mutation($courseCode: Int!, $courseGroup: Int!) {
+    gm_consolidateGroupGrades(courseCode: $courseCode, courseGroup: $courseGroup)
+  }
 `;
 
 export default function data() {
@@ -64,6 +73,44 @@ export default function data() {
     // console.log(data);
     return () => clearTimeout(timerId);
   }, [result.fetching, reexecuteQuery, data]);
+  
+    // Query GraphQL to consolidate grades
+  const [resultConsolidate, executeMutationConsolidate] = useMutation(DATA_MUTATION_CONSOLIDATE);
+
+  const consolidateNotes = (event, course) => {
+    console.log(course);
+    Swal.fire({
+      title: "¿Deseas consolidar las notas?",
+      text: "Si lo haces, no podrás volver a editar las notas de los alumnos",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#1A73E8",
+      cancelButtonColor: "#f44335",
+      confirmButtonText: "Consolidar Notas",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const variables = { courseCode: course.courseCode, courseGroup: course.groupNumber };
+        executeMutationConsolidate(variables).then((result) => {
+          if (result.error) {
+            console.log(result.error);
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Algo ha salido mal. Inténtalo de nuevo",
+            });
+            return;
+          }
+          Swal.fire({
+            icon: "success",
+            title: "Notas Consolidadas",
+            showConfirmButton: false,
+            timer: 2500,
+          });
+        });
+      }
+    });
+  };
 
   const Course = ({ name, courseGroup }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -132,15 +179,7 @@ export default function data() {
               </MDTypography>
             ),
             consolidateGrades: (
-              <MDTypography
-                component="a"
-                href="#"
-                variant="caption"
-                color="text"
-                fontWeight="medium"
-              >
-                Consolidar
-              </MDTypography>
+              <MDButton onClick={(event) => consolidateNotes(event, course)}>Consolidar</MDButton>
             ),
           };
         })
@@ -171,15 +210,7 @@ export default function data() {
               </MDTypography>
             ),
             consolidateGrades: (
-              <MDTypography
-                component="a"
-                href="#"
-                variant="caption"
-                color="text"
-                fontWeight="medium"
-              >
-                Consolidate
-              </MDTypography>
+              <MDButton onClick={(event) => consolidateNotes}>Consolidar</MDButton>
             ),
           },
         ],
