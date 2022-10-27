@@ -132,6 +132,15 @@ function Tables() {
     }
   };
 
+  const returnToGroups = () => {
+    if (showSchedule === true) {
+      setSelectedSchedules([]);
+      setShowSchedule(false);
+      setSelectedGroups([]);
+      setShowGroups(true);
+    }
+  };
+
   // Obtener grupos de asignaturas seleccionadas
 
   /*
@@ -413,9 +422,16 @@ function Tables() {
           )}
           {showSchedule && (
             <Grid item xs={3}>
-              <Card>
-                <MDButton onClick={() => console.log(selectedSchedules)}> Finalizar Inscripción </MDButton>
-              </Card>
+              <MDBox>
+                <Card>
+                  <MDButton onClick={() => returnToGroups()}> Regresar </MDButton>
+                </Card>
+              </MDBox>
+              <MDBox pt={3}>
+                <Card>
+                  <MDButton onClick={() => console.log(selectedSchedules)}> Finalizar Inscripción </MDButton>
+                </Card>
+              </MDBox>
             </Grid>
           )}
         </Grid>
