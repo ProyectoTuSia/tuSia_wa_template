@@ -33,12 +33,20 @@ function Tables() {
   // const { columns: pColumns, rows: pRows } = projectsTableData();
   const { columns: cColumns, rows: cRows, username, careerCheckList } = CareerTableData();
 
-  const { columns: tColumns, rows: tRows } = TypologysTabledata(username, careerCheckList);
+  const {
+    columns: tColumns,
+    foptaRows,
+    fobliRows,
+    doptaRows,
+    dobliRows,
+    leRows,
+    nivRows,
+  } = TypologysTabledata(username, careerCheckList);
 
-  //Mostrar la tabla de las carreras por defecto
+  // Mostrar la tabla de las carreras por defecto
   const [showCareers, setShowCareers] = useState(true);
 
-  //La tabla de asignaturas tenerla oculta al inicio
+  // La tabla de asignaturas tenerla oculta al inicio
   const [showSubjects, setShowSubjects] = useState(false);
 
   const [show1, setShow1] = useState(false);
@@ -91,43 +99,42 @@ function Tables() {
       <DashboardNavbar />
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
-
           {showCareers && (
-          <Grid item xs={9}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Elija la carrera habilitada en su historia academica para elegir materias
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns: cColumns, rows: cRows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
-          </Grid>
+            <Grid item xs={9}>
+              <Card>
+                <MDBox
+                  mx={2}
+                  mt={-3}
+                  py={3}
+                  px={2}
+                  variant="gradient"
+                  bgColor="info"
+                  borderRadius="lg"
+                  coloredShadow="info"
+                >
+                  <MDTypography variant="h6" color="white">
+                    Elija la carrera habilitada en su historia academica para elegir materias
+                  </MDTypography>
+                </MDBox>
+                <MDBox pt={3}>
+                  <DataTable
+                    table={{ columns: cColumns, rows: cRows }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  />
+                </MDBox>
+              </Card>
+            </Grid>
           )}
 
           {showCareers && (
-          <Grid item xs={3}>
-            <Card>
-              <MDButton onClick={() => mostrarMaterias()}> Mostrar Materias </MDButton>
-            </Card>
-          </Grid>
+            <Grid item xs={3}>
+              <Card>
+                <MDButton onClick={() => mostrarMaterias()}> Mostrar Materias </MDButton>
+              </Card>
+            </Grid>
           )}
 
           {showSubjects && (
@@ -154,12 +161,12 @@ function Tables() {
                         <ListItemIcon>
                           <InboxIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Fundamental optativa" />
+                        <ListItemText primary="Fundamentación optativa" />
                       </ListItemButton>
                     </AccordionSummary>
                     <AccordionDetails>
                       <DataTable
-                        table={{ columns: tColumns, rows: tRows }}
+                        table={{ columns: tColumns, rows: foptaRows }}
                         isSorted={false}
                         entriesPerPage={false}
                         showTotalEntries={false}
@@ -173,12 +180,88 @@ function Tables() {
                         <ListItemIcon>
                           <InboxIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Fundamental optativa" />
+                        <ListItemText primary="Fundamentación obligatoria" />
                       </ListItemButton>
                     </AccordionSummary>
                     <AccordionDetails>
                       <DataTable
-                        table={{ columns: cColumns, rows: cRows }}
+                        table={{ columns: tColumns, rows: fobliRows }}
+                        isSorted={false}
+                        entriesPerPage={false}
+                        showTotalEntries={false}
+                        noEndBorder
+                      />
+                    </AccordionDetails>
+                  </Accordion>
+                  <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMore />}>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <InboxIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Disciplinar optativa" />
+                      </ListItemButton>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <DataTable
+                        table={{ columns: tColumns, rows: doptaRows }}
+                        isSorted={false}
+                        entriesPerPage={false}
+                        showTotalEntries={false}
+                        noEndBorder
+                      />
+                    </AccordionDetails>
+                  </Accordion>
+                  <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMore />}>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <InboxIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Disciplinar obligatoria" />
+                      </ListItemButton>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <DataTable
+                        table={{ columns: tColumns, rows: dobliRows }}
+                        isSorted={false}
+                        entriesPerPage={false}
+                        showTotalEntries={false}
+                        noEndBorder
+                      />
+                    </AccordionDetails>
+                  </Accordion>
+                  <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMore />}>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <InboxIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Libre elección" />
+                      </ListItemButton>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <DataTable
+                        table={{ columns: tColumns, rows: leRows }}
+                        isSorted={false}
+                        entriesPerPage={false}
+                        showTotalEntries={false}
+                        noEndBorder
+                      />
+                    </AccordionDetails>
+                  </Accordion>
+                  <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMore />}>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <InboxIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Nivelación" />
+                      </ListItemButton>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <DataTable
+                        table={{ columns: tColumns, rows: nivRows }}
                         isSorted={false}
                         entriesPerPage={false}
                         showTotalEntries={false}
@@ -216,7 +299,7 @@ function Tables() {
                 </MDBox>
                 <MDBox pt={3}>
                   <DataTable
-                    table={{ columns: tColumns, rows: tRows }}
+                    table={{ columns: tColumns, rows: cRows }}
                     isSorted={false}
                     entriesPerPage={false}
                     showTotalEntries={false}
@@ -252,7 +335,7 @@ function Tables() {
                 </MDBox>
                 <MDBox pt={3}>
                   <DataTable
-                    table={{ columns: tColumns, rows: tRows }}
+                    table={{ columns: tColumns, rows: cRows }}
                     isSorted={false}
                     entriesPerPage={false}
                     showTotalEntries={false}

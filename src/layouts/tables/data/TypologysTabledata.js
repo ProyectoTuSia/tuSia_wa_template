@@ -63,12 +63,16 @@ export default function SubjectsData(username, careerCheckList) {
   const leSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter(
     (subject) => subject.typology === "libre eleccion"
   );
-  const nivSubejcts = data.ins_getStudentNotCoursedSubjectsInCareer.filter(
+  const nivSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter(
     (subject) => subject.typology === "nivelacion"
   );
+
+  /*
+  Trabajo de grado no se implementa por ahora
   const tgSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter(
     (subject) => subject.typology === "trabajo de grado"
   );
+  */
 
   return {
     columns: [
@@ -78,7 +82,122 @@ export default function SubjectsData(username, careerCheckList) {
       { Header: "Creditos", accessor: "Creditos", align: "left" },
     ],
 
-    rows: foptaSubjects.map((element) => ({
+    foptaRows: foptaSubjects.map((element) => ({
+      Seleccionar: (
+        <MDBox ml={-1}>
+          <Checkbox id={element.subject.code}> </Checkbox>
+        </MDBox>
+      ),
+      Codigo: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.code}
+        </MDTypography>
+      ),
+      Nombre: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.name}
+        </MDTypography>
+      ),
+      Creditos: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.credits}
+        </MDTypography>
+      ),
+    })),
+
+    fobliRows: fobliSubjects.map((element) => ({
+      Seleccionar: (
+        <MDBox ml={-1}>
+          <Checkbox id={element.subject.code}> </Checkbox>
+        </MDBox>
+      ),
+      Codigo: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.code}
+        </MDTypography>
+      ),
+      Nombre: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.name}
+        </MDTypography>
+      ),
+      Creditos: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.credits}
+        </MDTypography>
+      ),
+    })),
+
+    doptaRows: doptaSubjects.map((element) => ({
+      Seleccionar: (
+        <MDBox ml={-1}>
+          <Checkbox id={element.subject.code}> </Checkbox>
+        </MDBox>
+      ),
+      Codigo: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.code}
+        </MDTypography>
+      ),
+      Nombre: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.name}
+        </MDTypography>
+      ),
+      Creditos: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.credits}
+        </MDTypography>
+      ),
+    })),
+
+    dobliRows: dobliSubjects.map((element) => ({
+      Seleccionar: (
+        <MDBox ml={-1}>
+          <Checkbox id={element.subject.code}> </Checkbox>
+        </MDBox>
+      ),
+      Codigo: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.code}
+        </MDTypography>
+      ),
+      Nombre: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.name}
+        </MDTypography>
+      ),
+      Creditos: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.credits}
+        </MDTypography>
+      ),
+    })),
+
+    leRows: leSubjects.map((element) => ({
+      Seleccionar: (
+        <MDBox ml={-1}>
+          <Checkbox id={element.subject.code}> </Checkbox>
+        </MDBox>
+      ),
+      Codigo: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.code}
+        </MDTypography>
+      ),
+      Nombre: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.name}
+        </MDTypography>
+      ),
+      Creditos: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.credits}
+        </MDTypography>
+      ),
+    })),
+
+    nivRows: nivSubjects.map((element) => ({
       Seleccionar: (
         <MDBox ml={-1}>
           <Checkbox id={element.subject.code}> </Checkbox>
