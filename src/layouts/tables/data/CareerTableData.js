@@ -66,7 +66,7 @@ export default function CareerData() {
   return {
     columns: [
       { Header: "Seleccionar", accessor: "Seleccionar", align: "right" },
-      { Header: "Código", accessor: "Código", align: "center" },
+      { Header: "Código", accessor: "Codigo", align: "center" },
       { Header: "Nombre", accessor: "Nombre", align: "left" },
     ],
 
@@ -80,7 +80,7 @@ export default function CareerData() {
             />
           </MDBox>
         ),
-        Código: (
+        Codigo: (
           <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
             {data.ins_getCareersOfStudent[0].career.code}
           </MDTypography>

@@ -1,5 +1,5 @@
 import MDBox from "components/MDBox";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
@@ -19,11 +19,10 @@ query($careerCode: Int!, $username: String!) {
 }`;
 
 export default function SubjectsData(username, careerCheckList) {
-  
-  //Definir cuando no deberia hacerse la query
+  // Definir cuando no deberia hacerse la query
   const shouldPause = username === undefined || careerCheckList === [];
-  
-  //Traer las asignaturas no cursadas por un estudiante
+
+  // Traer las asignaturas no cursadas por un estudiante
   const [result, reexecuteQuery] = useQuery({
     query: DATA_QUERY_SUBJECTS,
     variables: {
@@ -49,53 +48,57 @@ export default function SubjectsData(username, careerCheckList) {
     };
   }
 
-  const foptaSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter( (subject) => subject.typology==='fundamentacion optativa');
-  const fobliSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter( (subject) => subject.typology==='fundamentacion obligatoria');
-  const doptaSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter( (subject) => subject.typology==='disciplinar optativa');
-  const dobliSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter( (subject) => subject.typology==='disciplinar obligatoria');
-  const leSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter( (subject) => subject.typology==='libre eleccion');
-  const nivSubejcts = data.ins_getStudentNotCoursedSubjectsInCareer.filter( (subject) => subject.typology==='nivelacion');
-  const tgSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter( (subject) => subject.typology==='trabajo de grado');
-
-  console.log(foptaSubjects);
-  console.log(fobliSubjects);
-  console.log(doptaSubjects);
-  console.log(dobliSubjects);
-  console.log(leSubjects);
-  console.log(nivSubejcts);
-  console.log(tgSubjects);
+  const foptaSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter(
+    (subject) => subject.typology === "fundamentacion optativa"
+  );
+  const fobliSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter(
+    (subject) => subject.typology === "fundamentacion obligatoria"
+  );
+  const doptaSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter(
+    (subject) => subject.typology === "disciplinar optativa"
+  );
+  const dobliSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter(
+    (subject) => subject.typology === "disciplinar obligatoria"
+  );
+  const leSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter(
+    (subject) => subject.typology === "libre eleccion"
+  );
+  const nivSubejcts = data.ins_getStudentNotCoursedSubjectsInCareer.filter(
+    (subject) => subject.typology === "nivelacion"
+  );
+  const tgSubjects = data.ins_getStudentNotCoursedSubjectsInCareer.filter(
+    (subject) => subject.typology === "trabajo de grado"
+  );
 
   return {
     columns: [
       { Header: "Seleccionar", accessor: "Seleccionar", align: "right" },
-      { Header: "Código", accessor: "Código", align: "center" },
+      { Header: "Código", accessor: "Codigo", align: "center" },
       { Header: "Nombre", accessor: "Nombre", align: "left" },
       { Header: "Creditos", accessor: "Creditos", align: "left" },
     ],
 
-    rows: [
-      {
-        Seleccionar: (
-          <MDBox ml={-1}>
-            <Checkbox> </Checkbox>
-          </MDBox>
-        ),
-        Código: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            1
-          </MDTypography>
-        ),
-        Nombre: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Empanada
-          </MDTypography>
-        ),
-        Creditos: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Creditos
-          </MDTypography>
-        ),
-      },
-    ],
+    rows: foptaSubjects.map((element) => ({
+      Seleccionar: (
+        <MDBox ml={-1}>
+          <Checkbox id={element.subject.code}> </Checkbox>
+        </MDBox>
+      ),
+      Codigo: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.code}
+        </MDTypography>
+      ),
+      Nombre: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.name}
+        </MDTypography>
+      ),
+      Creditos: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.subject.credits}
+        </MDTypography>
+      ),
+    })),
   };
 }
