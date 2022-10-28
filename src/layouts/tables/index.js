@@ -1,3 +1,6 @@
+// Sweet Aleret
+import Swal from "sweetalert2";
+
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -71,6 +74,9 @@ function Tables() {
   // Almacenar los codigos de los horarios de los grupos seleccionados
   const [selectedSchedules, setSelectedSchedules] = useState([]);
 
+  // Variable que identifica si hubo un error en que se inscribieron dos grupos de una misma asignatura
+  const [errorGroups, setErrorGroups] = useState(false);
+
   /** Si ya se estaba mostrando la tabla carreras
    * Al pedir que se muestren las materias dejar de mostrarla
    * Mostrar las asignaturas
@@ -107,10 +113,39 @@ function Tables() {
     }
   };
 
+  // Antes de ir a schedule se debe verificar que dos grupos elegidos sean de la misma asignatura
+
   const goToSchedule = () => {
     if (showGroups === true) {
-      setShowGroups(false);
-      setShowSchedule(true);
+      /* Lista auxiliar para almacenar codigos de asignaturas
+       * que ya se inscribieron */
+      const auxiliarList = [];
+      let dosGruposMismaAsignatura = false;
+      for (let i = 0; i < selectedGroups.length; i++) {
+        if (dosGruposMismaAsignatura) {
+          break;
+        }
+
+        if (!auxiliarList.includes(selectedGroups[i].split("-")[1])) {
+          // Agregar a la lista la asignatura porque ningun otro grupo la tiene
+          auxiliarList.push(selectedGroups[i].split("-")[1]);
+        } else {
+          // Poner la bandera que indica que hay dos grupos de una misma asignatura en true
+          dosGruposMismaAsignatura = true;
+        }
+      }
+
+      // Si en el analisis se encontraron dos  grupos de una misma asignatura lanzar error
+      if (dosGruposMismaAsignatura) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No se pueden elegir dos grupos de una misma asignatura",
+        });
+      } else {
+        setShowGroups(false);
+        setShowSchedule(true);
+      }
     }
   };
 
@@ -392,7 +427,10 @@ function Tables() {
               </MDBox>
               <MDBox pt={3}>
                 <Card>
-                  <MDButton onClick={() => console.log(selectedSchedules)}> Finalizar Inscripción </MDButton>
+                  <MDButton onClick={() => console.log(selectedSchedules)}>
+                    {" "}
+                    Finalizar Inscripción{" "}
+                  </MDButton>
                 </Card>
               </MDBox>
             </Grid>
