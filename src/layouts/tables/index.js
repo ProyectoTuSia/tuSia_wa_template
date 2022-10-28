@@ -118,6 +118,19 @@ function Tables() {
     }
   };
 
+  const fromInscriptionToGroups = () => {
+    if (showInscription === true) {
+      //Vaciar datos que se iban a usar para inscripcion
+      setInscriptionData([]);
+      //Vaciar la lista de horarios
+      setSelectedSchedules([]);
+      //Vaciar los grupos elegidos
+      setSelectedGroups([]);
+      setShowInscription(false);
+      setShowGroups(true);
+    }
+  }
+
   // Antes de ir a schedule se debe verificar que dos grupos elegidos sean de la misma asignatura
 
   const goToSchedule = () => {
@@ -488,7 +501,7 @@ function Tables() {
               </MDBox>
             </Grid>
           )}
-          {showInscription && <TryInscription inscriptionData={inscriptionData} />}
+          {showInscription && <TryInscription inscriptionData={inscriptionData} fromInscriptionToGroups={fromInscriptionToGroups} />}
         </Grid>
       </MDBox>
       <Footer />

@@ -49,6 +49,7 @@ function GroupsData(props) {
     variables: {
       subjectCode: parseInt(props.subjectCode),
     },
+    requestPolicy: "network-only",
   });
 
   const { data, fetching, error } = result;
