@@ -32,7 +32,9 @@ import DataTable from "examples/Tables/DataTable";
 import TypologysTabledata from "layouts/tables/data/TypologysTabledata";
 import CareerTableData from "layouts/tables/data/CareerTableData";
 import GroupsTableData from "layouts/tables/data/GroupsTableData";
+import { Try } from "@mui/icons-material";
 import ScheduleTableData from "./data/ScheduleTableData";
+import TryInscription from "./data/TryInscription";
 
 function Tables() {
   // const { columns: pColumns, rows: pRows } = projectsTableData();
@@ -74,8 +76,8 @@ function Tables() {
   // Almacenar los codigos de los horarios de los grupos seleccionados
   const [selectedSchedules, setSelectedSchedules] = useState([]);
 
-  // Variable que identifica si hubo un error en que se inscribieron dos grupos de una misma asignatura
-  const [errorGroups, setErrorGroups] = useState(false);
+  // Mostrar una pantalla de inscripcion
+  const [showInscription, setShowInscription] = useState(false);
 
   /** Si ya se estaba mostrando la tabla carreras
    * Al pedir que se muestren las materias dejar de mostrarla
@@ -159,7 +161,6 @@ function Tables() {
   };
 
   const goToTryInscription = () => {
-    console.log(selectedSchedules);
     if (showSchedule === true) {
       /* Lista auxiliar para almacenar los codigos
        * de los horarios inscritos */
@@ -184,6 +185,9 @@ function Tables() {
           title: "Oops...",
           text: "Algunos grupos que elegiste comparten algun horario, por favor elige grupos que no se dicten a la misma hora",
         });
+      } else {
+        setShowSchedule(false);
+        setShowInscription(true);
       }
     }
   };
@@ -457,11 +461,12 @@ function Tables() {
               </MDBox>
               <MDBox pt={3}>
                 <Card>
-                  <MDButton onClick={() => goToTryInscription()}> Finalizar Inscripción </MDButton>
+                  <MDButton onClick={() => goToTryInscription()}> Ir a pantalla de finalización de inscripción </MDButton>
                 </Card>
               </MDBox>
             </Grid>
           )}
+          {showInscription && <TryInscription />}
         </Grid>
       </MDBox>
       <Footer />
