@@ -14,24 +14,11 @@ mutation ($list: [ins_StudentHasSubjectGroupInput]) {
 
 function TryMutationInscription(props) {
   const [mutationInscriptionResult, mutationInscription] = useMutation(MUTATION_INSCRIPTION);
-  const variables = {
-    list: [
-      {
-        subject_group_number: 1,
-        subject_group_subject_code: 1000003,
-        student_username: "sarodriguezca",
-        token: "aaa",
-      },
-      {
-        subject_group_number: 1,
-        subject_group_subject_code: 1000004,
-        student_username: "sarodriguezca",
-        token: "aaa",
-      },
-    ],
-  };
 
   const validateInscription = () => {
+    const variables = {
+      list: props.inscriptionData,
+    };
     mutationInscription(variables).then((result) => {
       console.log(result);
     });

@@ -79,6 +79,9 @@ function Tables() {
   // Mostrar una pantalla de inscripcion
   const [showInscription, setShowInscription] = useState(false);
 
+  // Hook para almacenar los datos necesarios para intentar realizar la inscripcion
+  const [inscriptionData, setInscriptionData] = useState([]);
+
   /** Si ya se estaba mostrando la tabla carreras
    * Al pedir que se muestren las materias dejar de mostrarla
    * Mostrar las asignaturas
@@ -186,6 +189,22 @@ function Tables() {
           text: "Algunos grupos que elegiste comparten algun horario, por favor elige grupos que no se dicten a la misma hora",
         });
       } else {
+        // Intentar armar la lista de datos para realizar la inscripcion
+        let auxiliarObject = {};
+        const currentToken = localStorage.getItem("token");
+        for (let i = 0; i < selectedGroups.length; i++) {
+          const groupNumber = parseInt(selectedGroups[i].split("-")[0], 10);
+          const subjectCode = parseInt(selectedGroups[i].split("-")[1], 10);
+          auxiliarObject = {
+            subject_group_number: groupNumber,
+            subject_group_subject_code: subjectCode,
+            student_username: username,
+            token: currentToken,
+          };
+
+          inscriptionData.push(auxiliarObject);
+        }
+
         setShowSchedule(false);
         setShowInscription(true);
       }
@@ -461,12 +480,15 @@ function Tables() {
               </MDBox>
               <MDBox pt={3}>
                 <Card>
-                  <MDButton onClick={() => goToTryInscription()}> Ir a pantalla de finalización de inscripción </MDButton>
+                  <MDButton onClick={() => goToTryInscription()}>
+                    {" "}
+                    Ir a pantalla de finalización de inscripción{" "}
+                  </MDButton>
                 </Card>
               </MDBox>
             </Grid>
           )}
-          {showInscription && <TryInscription />}
+          {showInscription && <TryInscription inscriptionData={inscriptionData} />}
         </Grid>
       </MDBox>
       <Footer />
