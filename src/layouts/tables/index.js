@@ -158,6 +158,36 @@ function Tables() {
     }
   };
 
+  const goToTryInscription = () => {
+    console.log(selectedSchedules);
+    if (showSchedule === true) {
+      /* Lista auxiliar para almacenar los codigos
+       * de los horarios inscritos */
+      const auxiliarList = [];
+      let dosHorariosIguales = false;
+      for (let i = 0; i < selectedSchedules.length; i++) {
+        if (dosHorariosIguales) {
+          break;
+        }
+        if (!auxiliarList.includes(selectedSchedules[i])) {
+          // Agregar a la lista el horario ya que ningun otro grupo lo tiene
+          auxiliarList.push(selectedSchedules[i]);
+        } else {
+          // Poner la bandera que indica que hay dos grupos en un mismo horario en true
+          dosHorariosIguales = true;
+        }
+      }
+      // Si en el analisis se encontraron dos grupos con mismo horario
+      if (dosHorariosIguales) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Algunos grupos que elegiste comparten algun horario, por favor elige grupos que no se dicten a la misma hora",
+        });
+      }
+    }
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -427,10 +457,7 @@ function Tables() {
               </MDBox>
               <MDBox pt={3}>
                 <Card>
-                  <MDButton onClick={() => console.log(selectedSchedules)}>
-                    {" "}
-                    Finalizar Inscripción{" "}
-                  </MDButton>
+                  <MDButton onClick={() => goToTryInscription()}> Finalizar Inscripción </MDButton>
                 </Card>
               </MDBox>
             </Grid>

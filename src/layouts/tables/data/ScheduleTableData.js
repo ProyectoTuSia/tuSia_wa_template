@@ -38,6 +38,7 @@ function ScheduleData(props) {
       subjectCode: parseInt(props.group.split("-")[1]),
       groupNumber: parseInt(props.group.split("-")[0]),
     },
+    requestPolicy: "network-only",
   });
 
   const { data, fetching, error } = result;
