@@ -37,7 +37,7 @@ function UploadGrades() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Upload grades
+                  Subir notas
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>

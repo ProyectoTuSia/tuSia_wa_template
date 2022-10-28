@@ -9,6 +9,7 @@ import EditWeight from "../editWeight";
 import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
 import { useNavigate, Navigate, Link } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 // Images
 import team2 from "assets/images/team-2.jpg";
@@ -39,6 +40,9 @@ const DATA_MUTATION_CONSOLIDATE = `
 
 export default function data() {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  let email = jwt_decode(token).email;
+  email = email.split("@")[0];
 
   const buttonConsolidate = useRef();
 
@@ -55,7 +59,7 @@ export default function data() {
   const [result, reexecuteQuery] = useQuery({
     query: DATA_QUERY,
     variables: {
-      professorUsername: "arondonz",
+      professorUsername: email,
     },
     pause: true,
   });
@@ -173,8 +177,6 @@ export default function data() {
                   onClick={() => {
                     toComponentB();
                   }}
-                  // Navigate
-                  // to="/editWeight, {id: 1}"
                   href="/editWeight "
                   variant="caption"
                   color="text"
@@ -185,15 +187,16 @@ export default function data() {
               </Link>
             ),
             uploadGrades: (
-              <MDTypography
-                component="a"
-                href="/uploadGrades"
-                variant="caption"
-                color="text"
-                fontWeight="medium"
-              >
-                Editar
-              </MDTypography>
+              <Link to="/uploadGrades" state={{ course }}>
+                <MDTypography
+                  href="/uploadGrades"
+                  variant="caption"
+                  color="text"
+                  fontWeight="medium"
+                >
+                  Editar
+                </MDTypography>
+              </Link>
             ),
             consolidateGrades: (
               <MDButton

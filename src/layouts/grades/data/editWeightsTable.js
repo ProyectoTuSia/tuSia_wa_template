@@ -36,23 +36,6 @@ export default function data() {
     pause: true,
   });
 
-  // useEffect(() => {
-  //   if (result.fetching) return;
-
-  // Set up to refetch in one second, if the query is idle
-  // const timerId = setTimeout(() => {
-  //   reexecuteQuery({ requestPolicy: "network-only" });
-  // }, 1000);
-
-  // return () => clearTimeout(timerId);
-  // }, [result.fetching, reexecuteQuery, 2017257, 1]);
-
-  // const { data, fetching, error } = result;
-
-  // if (error) console.log(error.message);
-
-  // console.log(result);
-
   const Course = ({ name, courseGroup }) => (
     <MDBox display="flex" alignItems="center" lineHeight={1}>
       {/* <MDAvatar src={image} name={name} size="sm" /> */}
@@ -65,14 +48,6 @@ export default function data() {
     </MDBox>
   );
 
-  const Job = ({ title, description }) => (
-    <MDBox lineHeight={1} textAlign="left">
-      <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
-        {title}
-      </MDTypography>
-      <MDTypography variant="caption">{description}</MDTypography>
-    </MDBox>
-  );
 
   return {
     columns: [
