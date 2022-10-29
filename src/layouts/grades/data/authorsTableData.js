@@ -173,7 +173,7 @@ export default function data() {
             // function: <Job title="Manager" description="Organization" />,
             editWeight: (
               <Link to="/editWeight" state={{ course }}>
-                <MDTypography
+                <MDButton
                   // component="EditWeight"
                   onClick={() => {
                     toComponentB();
@@ -184,19 +184,14 @@ export default function data() {
                   fontWeight="medium"
                 >
                   Editar
-                </MDTypography>
+                </MDButton>
               </Link>
             ),
             uploadGrades: (
               <Link to="/uploadGrades" state={{ course }}>
-                <MDTypography
-                  href="/uploadGrades"
-                  variant="caption"
-                  color="text"
-                  fontWeight="medium"
-                >
+                <MDButton href="/uploadGrades" variant="caption" color="text" fontWeight="medium">
                   Editar
-                </MDTypography>
+                </MDButton>
               </Link>
             ),
             consolidateGrades: (
