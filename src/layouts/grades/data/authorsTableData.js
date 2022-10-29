@@ -60,6 +60,7 @@ export default function data() {
     query: DATA_QUERY,
     variables: {
       professorUsername: email,
+      // professorUsername: "arondonz",
     },
     pause: true,
   });

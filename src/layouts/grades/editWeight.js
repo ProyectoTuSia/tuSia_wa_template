@@ -18,7 +18,7 @@ import DataTable from "examples/Tables/DataTable";
 import authorsTableData from "layouts/grades/data/editWeightsTable";
 import projectsTableData from "layouts/tables/data/projectsTableData";
 import MDButton from "components/MDButton";
-import { Icon } from "@mui/material";
+import { Alert, Icon, Snackbar } from "@mui/material";
 import MDInput from "components/MDInput";
 import { useMutation, useQuery } from "urql";
 
@@ -37,7 +37,18 @@ mutation Mutation($courseCode: Int!, $courseGroup: Int!, $weights: gm_WeightsInp
 function EditWeight() {
   const [idWeight, setIdWeight] = useState("weight_1");
   const [idDescription, setIdDescription] = useState("description_1");
+  const [snackopen, setsnackOpen] = useState(false);
 
+  const handleSnackClick = () => {
+    setsnackOpen(true);
+  };
+
+  const handlesnackClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setsnackOpen(false);
+  };
   const {
     state: { course },
   } = useLocation();
@@ -111,19 +122,14 @@ function EditWeight() {
       courseGroup: course.groupNumber,
       weights: gm_WeightsInput,
     };
-    console.log(variables, "variables");
-    // submitMutation(variables);
 
     submitMutation(variables).then((submitMutationResult) => {
       if (submitMutationResult.error) {
         console.error("Oh no!", submitMutationResult.error);
+      } else {
+        handleSnackClick();
       }
     });
-
-    // const { data, fetching, error } = submitMutationResult;
-    // console.log(data, "data");
-    // console.log(fetching, "fetching");
-    // console.log(error, "error");
   };
 
   return (
@@ -154,6 +160,11 @@ function EditWeight() {
                     <MDButton onClick={handleSubmit}>
                       <Icon>save</Icon>
                     </MDButton>
+                    <Snackbar open={snackopen} autoHideDuration={4000} onClose={handlesnackClose}>
+                      <Alert onClose={handlesnackClose} severity="success" sx={{ width: "100%" }}>
+                        Se han actualizado los pesos!
+                      </Alert>
+                    </Snackbar>
                   </Grid>
                 </Grid>
               </MDBox>

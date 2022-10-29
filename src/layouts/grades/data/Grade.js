@@ -1,4 +1,5 @@
-import { Grid } from "@mui/material";
+import { Grid, Input } from "@mui/material";
+import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
 import MDTypography from "components/MDTypography";
@@ -22,14 +23,20 @@ const Grade = ({ setGrade, grades, key, description, value }) => {
         grade.value = parseFloat(text.target.value);
       }
     });
+    console.log(grades);
     setGrade(grades);
   };
 
   return (
     <Grid container justifyContent={"space-between"}>
       <Grid>
-        <MDTypography> {description}</MDTypography>
-        <MDInput label={value} type="number" onChange={(input) => handleChange(input)}>
+        <MDTypography variant="h5"> {description} </MDTypography>
+        <MDInput
+          label={value}
+          // style={{ marginbottom: "2rem" }}
+          type="number"
+          onChange={(input) => handleChange(input)}
+        >
           {}
         </MDInput>
       </Grid>
