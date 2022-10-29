@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 // Sweet Aleret
 import Swal from "sweetalert2";
 
@@ -34,7 +35,7 @@ function TryMutationInscription(props) {
           title: "Se ha realizado la inscripción exitosamente",
           text: "Da click al boton para volver a la pantalla principal",
         }).then((value) => {
-          window.location.href = "/dashboard";
+          window.location.href = "/inicio";
         });
       } else {
         Swal.fire({
@@ -42,7 +43,7 @@ function TryMutationInscription(props) {
           title: "No se ha podido realizar la inscripción",
           text: "Puede que los cupos de alguna asignatura se agotaran mientras realizabas el proceso, da click al boton para volver a la pantalla de seleccion de grupos",
         }).then((value) => {
-            props.fromInscriptionToGroups();
+          props.fromInscriptionToGroups();
         });
       }
     });
@@ -61,7 +62,9 @@ function TryMutationInscription(props) {
           borderRadius="lg"
           coloredShadow="info"
         >
-          <MDTypography variant="h6" color="white">¿Desea validar su inscripción para terminar el proceso?</MDTypography>
+          <MDTypography variant="h6" color="white">
+            ¿Desea validar su inscripción para terminar el proceso?
+          </MDTypography>
         </MDBox>
       </Card>
       <MDBox mt={3}>

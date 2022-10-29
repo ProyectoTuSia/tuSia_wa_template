@@ -39,7 +39,7 @@ function handleLogin(responseData) {
   console.log(responseData);
   if (responseData.authLogin !== "User not found" && responseData.authLogin !== "Wrong password") {
     localStorage.setItem("token", responseData.authLogin);
-    window.location.href = "/dashboard";
+    window.location.href = "/inicio";
   } else {
     Swal.fire({
       icon: "error",
@@ -54,7 +54,7 @@ function checkLogin() {
 
   if (token) {
     if (Date.now() < jwt_decode(token).exp * 1000) {
-      window.location.href = "/dashboard";
+      window.location.href = "/inicio";
     } else {
       localStorage.removeItem("token");
     }
@@ -127,7 +127,7 @@ function Basic() {
             <MDBox mb={2}>
               <MDInput
                 type="text"
-                label="Correo"
+                label="Usuario UNAL"
                 id="emailInput"
                 value={email}
                 fullWidth

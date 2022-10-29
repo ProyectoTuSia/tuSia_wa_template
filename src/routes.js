@@ -41,9 +41,9 @@ const routes = [
   {
     type: "collapse",
     name: "Inicio",
-    key: "dashboard",
+    key: "inicio",
     icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/dashboard",
+    route: "/inicio",
     component: <Dashboard />,
   },
   {
@@ -57,9 +57,9 @@ const routes = [
   {
     type: "collapse",
     name: "Inscripción",
-    key: "tables",
+    key: "inscripcion",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/tables",
+    route: "/inscripcion",
     component: <Tables />,
   },
   /*
@@ -97,14 +97,16 @@ const routes = [
     route: "/profile",
     component: <Profile />,
   },
+  */
   {
-    type: "collapse",
+    type: "",
     name: "Sign In",
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
     component: <SignIn />,
   },
+  /*
   {
     type: "collapse",
     name: "Sign Up",

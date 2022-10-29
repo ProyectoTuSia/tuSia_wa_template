@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 // Sweet Aleret
 import Swal from "sweetalert2";
 
@@ -129,7 +130,7 @@ function Tables() {
       setShowInscription(false);
       setShowGroups(true);
     }
-  }
+  };
 
   // Antes de ir a schedule se debe verificar que dos grupos elegidos sean de la misma asignatura
 
@@ -501,7 +502,12 @@ function Tables() {
               </MDBox>
             </Grid>
           )}
-          {showInscription && <TryInscription inscriptionData={inscriptionData} fromInscriptionToGroups={fromInscriptionToGroups} />}
+          {showInscription && (
+            <TryInscription
+              inscriptionData={inscriptionData}
+              fromInscriptionToGroups={fromInscriptionToGroups}
+            />
+          )}
         </Grid>
       </MDBox>
       <Footer />
