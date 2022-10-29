@@ -37,7 +37,7 @@ export default function SubjectsData(username, careerCheckList) {
   /**
    * Metodo para vaciar el hook al devolverse
    */
-   const emptySelectedSubjects = () => {
+  const emptySelectedSubjects = () => {
     setSelectedSubjects([]);
   };
 

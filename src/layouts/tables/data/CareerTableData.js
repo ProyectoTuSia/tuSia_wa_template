@@ -35,7 +35,6 @@ export default function CareerData() {
     }
   };
 
-
   /**
    * Metodo para vaciar el hook al devolverse
    */

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import MDBox from "components/MDBox";
 import React, { useState } from "react";
 import MDTypography from "components/MDTypography";
@@ -42,7 +43,7 @@ function GroupsData(props) {
       // Si ya no esta checkeado quitarlo de la lista de checkeados
       props.selectedGroups.splice(props.selectedGroups.indexOf(event.target.id), 1);
     }
-  }
+  };
 
   const [result, reexecuteQuery] = useQuery({
     query: DATA_QUERY_GROUPS,
@@ -74,7 +75,7 @@ function GroupsData(props) {
     Seleccionar: (
       <MDBox ml={-1}>
         <Checkbox
-          id={element.number.toString()+"-"+element.subject.code.toString()}
+          id={element.number.toString() + "-" + element.subject.code.toString()}
           onChange={checkGroup}
         />
       </MDBox>

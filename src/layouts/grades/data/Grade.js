@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Grid, Input } from "@mui/material";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";

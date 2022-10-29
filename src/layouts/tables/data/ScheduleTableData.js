@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import MDBox from "components/MDBox";
 import React, { useState } from "react";
 import MDTypography from "components/MDTypography";
@@ -85,7 +86,14 @@ function ScheduleData(props) {
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
-          <ListItemText primary={"Grupo "+(listSchedulesOfGroup[0].subjectGroup.number).toString()+" "+(listSchedulesOfGroup[0].subjectGroup.subject.name).toString()} />
+          <ListItemText
+            primary={
+              "Grupo " +
+              listSchedulesOfGroup[0].subjectGroup.number.toString() +
+              " " +
+              listSchedulesOfGroup[0].subjectGroup.subject.name.toString()
+            }
+          />
         </ListItemButton>
       </AccordionSummary>
       <AccordionDetails>

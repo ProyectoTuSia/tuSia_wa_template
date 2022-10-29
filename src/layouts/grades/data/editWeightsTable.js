@@ -48,7 +48,6 @@ export default function data() {
     </MDBox>
   );
 
-
   return {
     columns: [
       { Header: "Description", accessor: "description", width: "45%", align: "left" },
