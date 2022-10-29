@@ -45,6 +45,8 @@ export default function data() {
   email = email.split("@")[0];
 
   const buttonConsolidate = useRef();
+  const buttonEditWeight = useRef();
+  const buttonUploadGrades = useRef();
 
   const [selectedCourse, setselectedCourse] = useState(() => ({
     courseName: "",
@@ -90,6 +92,9 @@ export default function data() {
 
     if (cookieValue === "true") {
       buttonConsolidate.current.disabled = true;
+      buttonEditWeight.disabled = true;
+      buttonUploadGrades.disabled = true;
+
       return true;
     }
   };
@@ -182,6 +187,7 @@ export default function data() {
                   variant="caption"
                   color="text"
                   fontWeight="medium"
+                  ref={buttonEditWeight}
                 >
                   Editar
                 </MDButton>
@@ -189,7 +195,13 @@ export default function data() {
             ),
             uploadGrades: (
               <Link to="/uploadGrades" state={{ course }}>
-                <MDButton href="/uploadGrades" variant="caption" color="text" fontWeight="medium">
+                <MDButton
+                  href="/uploadGrades"
+                  variant="caption"
+                  color="text"
+                  fontWeight="medium"
+                  ref={buttonUploadGrades}
+                >
                   Editar
                 </MDButton>
               </Link>

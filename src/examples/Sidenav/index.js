@@ -23,6 +23,10 @@ import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 
+// JWT Decode
+// eslint-disable-next-line camelcase
+import jwt_decode from "jwt-decode";
+
 // Material Dashboard 2 React context
 import {
   useMaterialUIController,
@@ -31,7 +35,17 @@ import {
   setWhiteSidenav,
 } from "context";
 
+function getRole() {
+  const token = localStorage.getItem("token");
+  if (token) {
+    return jwt_decode(token).role;
+  }
+  return "";
+}
+
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
+  const roleUser = getRole();
+
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode } = controller;
   const location = useLocation();
@@ -69,30 +83,32 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
   const renderRoutes = routes.map(
-    ({ type, name, icon, title, noCollapse, key, href, route, roles = [] }) => {
+    ({ type, name, icon, title, noCollapse, key, href, route, role }) => {
       let returnValue = null;
 
       if (type === "collapse") {
-        returnValue = href ? (
-          <Link
-            href={href}
-            key={key}
-            target="_blank"
-            rel="noreferrer"
-            sx={{ textDecoration: "none" }}
-          >
-            <SidenavCollapse
-              name={name}
-              icon={icon}
-              active={key === collapseName}
-              noCollapse={noCollapse}
-            />
-          </Link>
-        ) : (
-          <NavLink key={key} to={route}>
-            <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
-          </NavLink>
-        );
+        if (role === roleUser || name === "Inicio") {
+          returnValue = href ? (
+            <Link
+              href={href}
+              key={key}
+              target="_blank"
+              rel="noreferrer"
+              sx={{ textDecoration: "none" }}
+            >
+              <SidenavCollapse
+                name={name}
+                icon={icon}
+                active={key === collapseName}
+                noCollapse={noCollapse}
+              />
+            </Link>
+          ) : (
+            <NavLink key={key} to={route}>
+              <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
+            </NavLink>
+          );
+        }
       } else if (type === "title") {
         returnValue = (
           <MDTypography

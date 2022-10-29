@@ -53,6 +53,7 @@ const routes = [
     icon: <Icon fontSize="small">calendar_month</Icon>,
     route: "/mi-horario",
     component: <Schedule />,
+    role: "Estudiante",
   },
   {
     type: "collapse",
@@ -61,25 +62,8 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/inscripcion",
     component: <Tables />,
+    role: "Estudiante",
   },
-  /*
-  {
-    type: "collapse",
-    name: "Billing",
-    key: "billing",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
-    component: <Billing />,
-  },
-  {
-    type: "collapse",
-    name: "RTL",
-    key: "rtl",
-    icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
-    route: "/rtl",
-    component: <RTL />,
-  },
-  */
   {
     type: "collapse",
     name: "Calificaciones",
@@ -87,17 +71,8 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/grades",
     component: <Grades />,
+    role: "Profesor",
   },
-  /*
-  {
-    type: "collapse",
-    name: "Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
-  },
-  */
   {
     type: "",
     name: "Sign In",
@@ -106,24 +81,6 @@ const routes = [
     route: "/authentication/sign-in",
     component: <SignIn />,
   },
-  /*
-  {
-    type: "collapse",
-    name: "Sign Up",
-    key: "sign-up",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
-    component: <SignUp />,
-  },
-  {
-    type: "collapse",
-    name: "My Schedule",
-    key: "my-schedule",
-    icon: <Icon fontSize="small">calendar_month</Icon>,
-    route: "/my-schedule",
-    component: <Schedule />,
-  },
-  */
   {
     type: "",
     name: "editWeight",
