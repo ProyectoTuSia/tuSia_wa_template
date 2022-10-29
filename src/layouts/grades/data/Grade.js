@@ -33,8 +33,9 @@ const Grade = ({ setGrade, grades, key, description, value }) => {
       <Grid>
         <MDTypography variant="h5"> {description} </MDTypography>
         <MDInput
+          min="1"
+          max="5"
           label={value}
-          // style={{ marginbottom: "2rem" }}
           type="number"
           onChange={(input) => handleChange(input)}
         >
