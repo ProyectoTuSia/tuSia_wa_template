@@ -40,6 +40,14 @@ import Icon from "@mui/material/Icon";
 const routes = [
   {
     type: "collapse",
+    name: "Inicio",
+    key: "dashboard",
+    icon: <Icon fontSize="small">dashboard</Icon>,
+    route: "/dashboard",
+    component: <Dashboard />,
+  },
+  {
+    type: "collapse",
     name: "Mi Horario",
     key: "mi-horario",
     icon: <Icon fontSize="small">calendar_month</Icon>,
@@ -48,20 +56,13 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Dashboard",
-    key: "dashboard",
-    icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/dashboard",
-    component: <Dashboard />,
-  },
-  {
-    type: "collapse",
-    name: "Tables",
+    name: "Inscripción",
     key: "tables",
-    icon: <Icon fontSize="small">table_view</Icon>,
+    icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/tables",
     component: <Tables />,
   },
+  /*
   {
     type: "collapse",
     name: "Billing",
@@ -78,14 +79,16 @@ const routes = [
     route: "/rtl",
     component: <RTL />,
   },
+  */
   {
     type: "collapse",
-    name: "Grades",
+    name: "Calificaciones",
     key: "grades",
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/grades",
     component: <Grades />,
   },
+  /*
   {
     type: "collapse",
     name: "Profile",
@@ -118,6 +121,7 @@ const routes = [
     route: "/my-schedule",
     component: <Schedule />,
   },
+  */
   {
     type: "",
     name: "editWeight",
