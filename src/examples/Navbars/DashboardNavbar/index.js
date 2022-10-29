@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import { useState, useEffect } from "react";
 
 // react-router components
@@ -75,6 +76,11 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
 
+  function handleLogOut() {
+    localStorage.removeItem("token");
+    window.location.href = "/authentication/sign-in";
+  }
+
   // Render the notifications menu
   const renderMenu = () => (
     <Menu
@@ -88,7 +94,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
       onClose={handleCloseMenu}
       sx={{ mt: 2 }}
     >
-      <NotificationItem icon={<Icon>logout</Icon>} title="Cerrar Sesión" />
+      <NotificationItem icon={<Icon>logout</Icon>} title="Cerrar Sesión" onClick={handleLogOut} />
     </Menu>
   );
 

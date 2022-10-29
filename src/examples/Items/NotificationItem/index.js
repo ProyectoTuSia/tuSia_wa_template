@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { forwardRef } from "react";
 
 // prop-types is a library for typechecking of props.
@@ -32,5 +33,7 @@ NotificationItem.propTypes = {
   icon: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
 };
+
+NotificationItem.displayName = "NotificationItem";
 
 export default NotificationItem;

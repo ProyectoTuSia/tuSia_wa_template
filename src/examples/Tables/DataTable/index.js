@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import { useMemo, useEffect, useState } from "react";
 
 // prop-types is a library for typechecking of props

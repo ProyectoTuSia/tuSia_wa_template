@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { forwardRef, createContext, useContext, useMemo } from "react";
 
 // prop-types is a library for typechecking of props
@@ -76,5 +77,7 @@ MDPagination.propTypes = {
   active: PropTypes.bool,
   children: PropTypes.node.isRequired,
 };
+
+MDPagination.displayName = "MDPagination";
 
 export default MDPagination;

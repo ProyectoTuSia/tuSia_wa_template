@@ -30,11 +30,22 @@ import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Schedule from "layouts/schedule/index";
+import Grades from "layouts/grades/index";
+import EditWeight from "layouts/grades/editWeight";
+import UploadGrades from "layouts/grades/uploadGrades";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
 
 const routes = [
+  {
+    type: "collapse",
+    name: "Mi Horario",
+    key: "mi-horario",
+    icon: <Icon fontSize="small">calendar_month</Icon>,
+    route: "/mi-horario",
+    component: <Schedule />,
+  },
   {
     type: "collapse",
     name: "Dashboard",
@@ -69,11 +80,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
+    name: "Grades",
+    key: "grades",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/grades",
+    component: <Grades />,
   },
   {
     type: "collapse",
@@ -106,6 +117,22 @@ const routes = [
     icon: <Icon fontSize="small">calendar_month</Icon>,
     route: "/my-schedule",
     component: <Schedule />,
+  },
+  {
+    type: "",
+    name: "editWeight",
+    key: "edit-weight",
+    icon: <Icon fontSize="small">calendar_month</Icon>,
+    route: "/editWeight",
+    component: <EditWeight />,
+  },
+  {
+    type: "",
+    name: "uploadGrades",
+    key: "upload-grades",
+    icon: <Icon fontSize="small">calendar_month</Icon>,
+    route: "/uploadGrades",
+    component: <UploadGrades />,
   },
 ];
 
