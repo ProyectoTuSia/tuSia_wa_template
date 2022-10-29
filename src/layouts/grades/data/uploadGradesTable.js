@@ -11,6 +11,7 @@ import team2 from "assets/images/team-2.jpg";
 
 import { useMutation, useQuery } from "urql";
 import {
+  Alert,
   Button,
   Dialog,
   DialogActions,
@@ -25,6 +26,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import Grade from "./Grade";
+import Snackbar from "@mui/material/Snackbar";
 
 const DATA_QUERY = `
 query Gm_getGroupGrades($courseCode: Int!, $groupCode: Int!) {
@@ -68,6 +70,7 @@ export default function data() {
 
   const [userGrades, setUserGrades] = useState([]);
   const [nameUser, setnameUser] = useState("");
+  const [snackopen, setsnackOpen] = useState(false);
 
   const [submitMutationResult, submitMutation] = useMutation(DATA_MUTATION_USER_GRADES);
 
@@ -86,36 +89,50 @@ export default function data() {
       studentsQuery();
     }, 4000);
     const { data, fetching, error } = result;
-    // console.log(data);
     return () => clearTimeout(timerId);
   }, [result.fetching, studentsQuery, data]);
 
   if (data) {
-    // let studentNames = [];
+    console.log(data, "data");
     data["gm_getGroupGrades"].forEach((student) => {
-      let username = student.username;
-      if (!studentNames.includes(username)) {
-        studentNames.push(username);
+      if (student) {
+        let username = student.username;
+        if (!studentNames.includes(username)) {
+          studentNames.push(username);
+        }
       }
     });
   }
+  const handleSnackClick = () => {
+    setsnackOpen(true);
+  };
+
+  const handlesnackClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setsnackOpen(false);
+  };
 
   const handleClickOpen = (username) => {
     let auxUserGrades = [];
     console.log(username, "from handle");
     setnameUser(username);
     data["gm_getGroupGrades"].forEach((student) => {
-      if (username == student.username) {
-        auxUserGrades.push(student);
+      if (student) {
+        if (username == student.username) {
+          auxUserGrades.push(student);
+        }
       }
     });
+
     setUserGrades(auxUserGrades);
-    // console.log(userGrades, "userGrades");
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+    handlesnackClose();
   };
 
   const handleUpdate = () => {
@@ -124,7 +141,9 @@ export default function data() {
     userGrades.forEach((grade) => {
       let aux = {
         student_username: nameUser,
-        professor_username: email,
+        // professor_username: email,
+        professor_username: "arondonz",
+
         weight: grade.weight,
         description: grade.description,
         value: grade.value,
@@ -150,6 +169,7 @@ export default function data() {
       if (submitMutationResult.error) {
         console.error("Oh no!", submitMutationResult.error);
       }
+      handleSnackClick();
       console.log(submitMutationResult);
     });
   };
@@ -189,27 +209,34 @@ export default function data() {
                 <MDButton onClick={() => handleClickOpen(username)} color="primary">
                   Editar
                 </MDButton>
-                <Dialog open={open} onClose={handleClose}>
-                  <DialogTitle>{nameUser}</DialogTitle>
-                  <Grid container>
-                    {userGrades ? (
-                      userGrades.map((grade) => (
-                        <Grade
-                          key={grade.description}
-                          description={grade.description}
-                          value={grade.value}
-                          grades={userGrades}
-                          setGrade={setUserGrades}
-                        ></Grade>
-                      ))
-                    ) : (
-                      <MDButton>Cargando...</MDButton>
-                    )}
+                <Dialog open={open} onClose={handleClose} fullWidth="true">
+                  <DialogTitle style={{ justifyContent: "center" }}>{nameUser}</DialogTitle>
+                  <Grid container justifyContent={"space-between"}>
+                    <Grid>
+                      {userGrades ? (
+                        userGrades.map((grade) => (
+                          <Grade
+                            key={grade.description}
+                            description={grade.description}
+                            value={grade.value}
+                            grades={userGrades}
+                            setGrade={setUserGrades}
+                          ></Grade>
+                        ))
+                      ) : (
+                        <MDButton>Cargando...</MDButton>
+                      )}
+                    </Grid>
                   </Grid>
 
                   <DialogActions>
-                    <Button onClick={handleClose}>Cancelar</Button>
+                    <Button onClick={handleClose}>Cerrar</Button>
                     <Button onClick={() => handleUpdate({ username })}>Actualizar</Button>
+                    <Snackbar open={snackopen} onClose={handlesnackClose}>
+                      <Alert onClose={handlesnackClose} severity="success" sx={{ width: "100%" }}>
+                        Se actualizaron las notas!
+                      </Alert>
+                    </Snackbar>
                   </DialogActions>
                 </Dialog>
               </>
