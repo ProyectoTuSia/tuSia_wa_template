@@ -239,9 +239,9 @@ function Tables() {
                   py={3}
                   px={2}
                   variant="gradient"
-                  bgColor="info"
+                  bgColor="primary"
                   borderRadius="lg"
-                  coloredShadow="info"
+                  coloredShadow="primary"
                 >
                   <MDTypography variant="h6" color="white">
                     Elija la carrera habilitada en su historia academica para elegir materias
@@ -277,9 +277,9 @@ function Tables() {
                   py={3}
                   px={2}
                   variant="gradient"
-                  bgColor="info"
+                  bgColor="primary"
                   borderRadius="lg"
-                  coloredShadow="info"
+                  coloredShadow="primary"
                 >
                   <MDTypography variant="h6" color="white">
                     Seleccione las asignaturas que desea inscribir
@@ -428,9 +428,9 @@ function Tables() {
                   py={3}
                   px={2}
                   variant="gradient"
-                  bgColor="info"
+                  bgColor="primary"
                   borderRadius="lg"
-                  coloredShadow="info"
+                  coloredShadow="primary"
                 >
                   <MDTypography variant="h6" color="white">
                     Seleccione los grupos de las asignaturas que desea cursar
@@ -469,9 +469,9 @@ function Tables() {
                   py={3}
                   px={2}
                   variant="gradient"
-                  bgColor="info"
+                  bgColor="primary"
                   borderRadius="lg"
-                  coloredShadow="info"
+                  coloredShadow="primary"
                 >
                   <MDTypography variant="h6" color="white">
                     Verifica el horario de cada grupo que seleccionaste

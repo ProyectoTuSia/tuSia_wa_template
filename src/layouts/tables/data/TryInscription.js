@@ -51,22 +51,20 @@ function TryMutationInscription(props) {
 
   return (
     <Grid item xs={9}>
-      <Card>
-        <MDBox
-          mx={2}
-          mt={0}
-          py={3}
-          px={2}
-          variant="gradient"
-          bgColor="warning"
-          borderRadius="lg"
-          coloredShadow="info"
-        >
-          <MDTypography variant="h6" color="white">
-            ¿Desea validar su inscripción para terminar el proceso?
-          </MDTypography>
-        </MDBox>
-      </Card>
+      <MDBox
+        mx={2}
+        mt={0}
+        py={3}
+        px={2}
+        variant="gradient"
+        bgColor="warning"
+        borderRadius="lg"
+        coloredShadow="info"
+      >
+        <MDTypography variant="h6" color="white">
+          ¿Desea validar su inscripción para terminar el proceso?
+        </MDTypography>
+      </MDBox>
       <MDBox mt={3}>
         <Card>
           <MDButton onClick={() => validateInscription()}> Si, deseo validar </MDButton>

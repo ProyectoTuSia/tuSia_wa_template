@@ -15,6 +15,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
+import Footer from "layouts/authentication/components/Footer";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
@@ -97,62 +98,65 @@ function Basic() {
   }, [result.fetching, reexecuteQuery, email, password]);
 
   return (
-    <BasicLayout image={bgImage}>
-      <Card>
-        <MDBox
-          variant="gradient"
-          bgColor="primary"
-          borderRadius="lg"
-          coloredShadow="info"
-          mx={2}
-          mt={-3}
-          p={2}
-          mb={1}
-          textAlign="center"
-        >
-          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Inicia Sesión
-          </MDTypography>
-        </MDBox>
-        <MDBox pt={4} pb={3} px={3}>
+    <div>
+      <BasicLayout image={bgImage}>
+        <Card>
           <MDBox
-            component="form"
-            role="form"
-            onSubmit={(event) => {
-              event.preventDefault();
-              reexecuteQuery();
-              handleLogin(data);
-            }}
+            variant="gradient"
+            bgColor="primary"
+            borderRadius="lg"
+            coloredShadow="info"
+            mx={2}
+            mt={-3}
+            p={2}
+            mb={1}
+            textAlign="center"
           >
-            <MDBox mb={2}>
-              <MDInput
-                type="text"
-                label="Usuario UNAL"
-                id="emailInput"
-                value={email}
-                fullWidth
-                onChange={(event) => setEmail(event.target.value)}
-              />
-            </MDBox>
-            <MDBox mb={2}>
-              <MDInput
-                type="password"
-                label="Contraseña"
-                id="emailPassword"
-                value={password}
-                fullWidth
-                onChange={(event) => setPassword(event.target.value)}
-              />
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="dark" fullWidth type="submit">
-                iniciar sesión
-              </MDButton>
+            <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+              Inicia Sesión
+            </MDTypography>
+          </MDBox>
+          <MDBox pt={4} pb={3} px={3}>
+            <MDBox
+              component="form"
+              role="form"
+              onSubmit={(event) => {
+                event.preventDefault();
+                reexecuteQuery();
+                handleLogin(data);
+              }}
+            >
+              <MDBox mb={2}>
+                <MDInput
+                  type="text"
+                  label="Usuario UNAL"
+                  id="emailInput"
+                  value={email}
+                  fullWidth
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="password"
+                  label="Contraseña"
+                  id="emailPassword"
+                  value={password}
+                  fullWidth
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+              </MDBox>
+              <MDBox mt={4} mb={1}>
+                <MDButton variant="gradient" color="dark" fullWidth type="submit">
+                  iniciar sesión
+                </MDButton>
+              </MDBox>
             </MDBox>
           </MDBox>
-        </MDBox>
-      </Card>
-    </BasicLayout>
+        </Card>
+      </BasicLayout>
+      <Footer light />
+    </div>
   );
 }
 
