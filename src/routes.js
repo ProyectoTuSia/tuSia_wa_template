@@ -23,6 +23,7 @@
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
+import ExternalSearch from "layouts/Search";
 import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
 import Notifications from "layouts/notifications";
@@ -36,6 +37,7 @@ import UploadGrades from "layouts/grades/uploadGrades";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import { Search } from "@mui/icons-material";
 
 const routes = [
   {
@@ -80,6 +82,15 @@ const routes = [
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
     component: <SignIn />,
+  },
+  {
+    type: "collapse",
+    name: "Materias",
+    key: "materias",
+    icon: <Icon fontSize="small">search</Icon>,
+    route: "/materias",
+    component: <ExternalSearch />,
+    role: "Estudiante",
   },
   {
     type: "",
