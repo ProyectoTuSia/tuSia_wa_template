@@ -63,10 +63,14 @@ function SubjectsData(searchid, searchname) {
     columns: [
       { Header: "ID", accessor: "Id_subject", align: "right" },
       { Header: "Nombre Materia", accessor: "Name_subject", align: "center" },
-      { Header: "Typologia", accessor: "Typology", align: "left" },
       { Header: "Creditos", accessor: "Credits", align: "left" },
+      { Header: "Typologia", accessor: "Typology", align: "left" },
+      { Header: "Sede", accessor: "Sede", align: "left" },
+      { Header: "Nivel de estudio", accessor: "Nivel_estudio", align: "left" },
+      { Header: "Facultad", accessor: "Id_career", align: "left" },
       { Header: "Descripcion", accessor: "Descripcion", align: "left" },
-      { Header: "Carrera", accessor: "Id_career", align: "left" },
+      { Header: "Pre-Requisitos", accessor: "Descripcion", align: "left" },
+      { Header: "Codigo", accessor: "Id_subject", align: "left" },
     ],
     rows: listSubject.map((element) => ({
       Id_subject: (
