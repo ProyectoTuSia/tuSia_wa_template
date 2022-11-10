@@ -85,7 +85,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Materias",
+    name: "Materias Externas",
     key: "materias",
     icon: <Icon fontSize="small">search</Icon>,
     route: "/materias",

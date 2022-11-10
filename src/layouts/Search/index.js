@@ -143,7 +143,7 @@ function ExternalSearch() {
                   coloredShadow="primary"
                 >
                   <MDTypography variant="h6" color="white">
-                    Verifica el horario de cada grupo que seleccionaste
+                    Estas son las materias ofertadas por el grupo 2B.
                   </MDTypography>
                 </MDBox>
                 <MDBox pt={2}>

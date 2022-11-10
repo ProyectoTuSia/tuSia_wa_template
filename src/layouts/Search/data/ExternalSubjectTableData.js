@@ -12,56 +12,32 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import { Checkbox, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import DataTable from "examples/Tables/DataTable";
 import { useQuery } from "urql";
-import soap from "soap";
 
-// const DATA_QUERY_SUBJECTS = `
-// query GetSubject {
-//   getSubject {
-//     Id_subject
-//     Name_subject
-//     Typology
-//     Credits
-//     Description
-//     Id_career
-//     Id_condition
-//   }
-// }`;
+const DATA_QUERY_SUBJECTS = `
+query In_getExternalCourse {
+  in_getExternalCourse {
+    id
+    codigo
+    creditos
+    descripcion
+    facultad
+    nivelestudio
+    nombre
+    prerequisitos
+    sede
+    tipologia
+  }
+}`;
 
 function SubjectsData(searchid, searchname) {
-  const url = "https://interfaceSOAPSIA2B.crvargasm.repl.co/wsdl?wsdl";
-  const [externalData, setExternalData] = useState();
-
-  // Create client
-  soap.createClient(url, function (err, client) {
-    if (err) {
-      throw err;
-    }
-    /*
-     * Parameters of the service call: they need to be called as specified
-     * in the WSDL file
-     */
-
-    var args = {
-      id: 10,
-    };
-
-    // call the service
-    client.Documents(args, function (err, res) {
-      if (err) throw err;
-      // print the service returned result
-      console.log(res);
-      setExternalData(res);
-    });
+  const [result, reexecuteQuery] = useQuery({
+    query: DATA_QUERY_SUBJECTS,
+    requestPolicy: "network-only",
   });
 
-  // const [result, reexecuteQuery] = useQuery({
-  //   query: DATA_QUERY_SUBJECTS,
-  //   requestPolicy: "network-only",
-  // });
+  const { data, fetching, error } = result;
 
-  // const { data, fetching, error } = result;
-
-  if (!externalData) {
+  if (fetching) {
     return {
       columns: [],
       rows: [],
@@ -74,17 +50,14 @@ function SubjectsData(searchid, searchname) {
       rows: [],
     };
   }
-
-  // const listSubject =
-  //   !searchid && !searchname
-  //     ? data.getSubject
-  //     : data.getSubject.filter(
-  //         (dato) =>
-  //           (dato.id.toString().includes(searchid) && searchid) ||
-  //           (dato.nombre.toLowerCase().includes(searchname.toLocaleLowerCase()) && searchname)
-  //       );
-
-  //listSchedulesOfGroup.map((element) => props.selectedSchedules.push(element.schedule.id));
+  const listSubject =
+    !searchid && !searchname
+      ? data.in_getExternalCourse
+      : data.in_getExternalCourse.filter(
+          (dato) =>
+            (dato.id.toString().includes(searchid) && searchid) ||
+            (dato.nombre.toLowerCase().includes(searchname.toLocaleLowerCase()) && searchname)
+        );
 
   return {
     columns: [
@@ -103,6 +76,11 @@ function SubjectsData(searchid, searchname) {
       id: (
         <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
           {element.id}
+        </MDTypography>
+      ),
+      nombre: (
+        <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+          {element.nombre}
         </MDTypography>
       ),
       creditos: (
@@ -140,9 +118,9 @@ function SubjectsData(searchid, searchname) {
           {element.prerequisitos}
         </MDTypography>
       ),
-      code: (
+      codigo: (
         <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-          {element.code}
+          {element.codigo}
         </MDTypography>
       ),
     })),
