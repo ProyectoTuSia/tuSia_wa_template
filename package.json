@@ -50,7 +50,7 @@
     "soap": "^0.43.0"
   },
   "scripts": {
-    "start": "HTTPS=true SSL_CRT_FILE='./certificates/server.crt' SSL_KEY_FILE='./certificates/key.pem' react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
