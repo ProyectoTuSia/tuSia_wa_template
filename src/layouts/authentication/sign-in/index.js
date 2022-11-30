@@ -85,18 +85,6 @@ function Basic() {
 
   if (error) console.log(error.message);
 
-  // Function to execute the query
-  useEffect(() => {
-    if (result.fetching) return;
-
-    // Set up to refetch in one second, if the query is idle
-    const timerId = setTimeout(() => {
-      reexecuteQuery({ requestPolicy: "network-only" });
-    }, 1000);
-
-    return () => clearTimeout(timerId);
-  }, [result.fetching, reexecuteQuery, email, password]);
-
   return (
     <div>
       <BasicLayout image={bgImage}>

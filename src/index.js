@@ -9,7 +9,7 @@ import App from "App";
 import { MaterialUIControllerProvider } from "context";
 
 const client = createClient({
-  url: "http://34.70.119.125:3001/graphql",
+  url: "http://localhost:3001/graphql",
 });
 
 ReactDOM.render(
